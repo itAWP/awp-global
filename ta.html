@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>About – AWP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <link rel="stylesheet" href="https://public.codepenassets.com/css/reset-2.0.min.css">
+    
+	  <link rel="stylesheet" href="https://public.codepenassets.com/css/normalize-5.0.0.min.css">
+	
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- Advanced Navigation Bar -->
+    <nav class="navbar-container">
+        <div class="navbar">
+            <!-- Brand/Logo -->
+            <a href="index.html" class="navbar-brand">
+                <div class="logo-icon"></div>
+                <img src="./img/log.png" class="logo" alt="ALTIUS">
+            </a>
+
+            <!-- Navigation Links -->
+            <ul class="navbar-nav" id="navbarNav">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link active">
+                        <svg class="nav-icon" viewBox="0 0 24 24">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                        </svg>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="about.html" class="nav-link">
+                        <svg class="nav-icon" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        <span>About</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#portfolio" class="nav-link">
+                        <svg class="nav-icon" viewBox="0 0 24 24">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 3h6v4"></path>
+                            <path d="m22 7-10-4-10 4"></path>
+                        </svg>
+                        <span>Portfolio</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">
+                        <svg class="nav-icon" viewBox="0 0 24 24">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        <span>Contact</span>
+                    </a>
+                </li>                
+                <li class="nav-item">
+                    <a href="#cta" class="cta-button">
+                        Get Started
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Mobile Toggle -->
+            <button class="mobile-toggle" id="mobileToggle">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="index.html" class="mobile-menu-brand">
+                <div class="logo-icon"></div>
+                <img src="./img/log.png" class="logo" alt="ALTIUS">
+            </a>
+            <button class="mobile-menu-close" id="mobileMenuClose">
+                <span>×</span>
+            </button>
+        </div>
+        
+        <ul class="mobile-menu-nav">
+            <li class="mobile-menu-item">
+                <a href="index.html" class="mobile-menu-link active">
+                    <svg class="mobile-menu-icon" viewBox="0 0 24 24">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9,22 9,12 15,12 15,22"></polyline>
+                    </svg>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="mobile-menu-item">
+                <a href="about.html" class="mobile-menu-link">
+                    <svg class="mobile-menu-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <span>About</span>
+                </a>
+            </li>
+            <li class="mobile-menu-item">
+                <a href="#portfolio" class="mobile-menu-link">
+                    <svg class="mobile-menu-icon" viewBox="0 0 24 24">
+                        <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                        <path d="M16 3h6v4"></path>
+                        <path d="m22 7-10-4-10 4"></path>
+                    </svg>
+                    <span>Portfolio</span>
+                </a>
+            </li>
+            <li class="mobile-menu-item">
+                <a href="#contact" class="mobile-menu-link">
+                    <svg class="mobile-menu-icon" viewBox="0 0 24 24">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    <span>Contact</span>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="mobile-cta">
+            <a href="#cta" class="mobile-cta-button">
+                Get Started
+            </a>
+        </div>
+    </div>
+
+    <main>
+      <section class="hero1" id="hero1">
+        <!-- Geometric background -->
+        <div class="geometric-bg">
+            <div class="geo-circle"></div>
+            <div class="geo-circle"></div>
+            <div class="geo-circle"></div>
+        </div>
+        
+        <!-- Diamond ornaments -->
+        <div class="diamond-ornament"></div>
+        <div class="diamond-ornament"></div>
+        <div class="diamond-ornament"></div>
+        <div class="diamond-ornament"></div>
+        
+        <!-- Vertical dividers -->
+        <div class="vertical-divider"></div>
+        <div class="vertical-divider"></div>
+        
+        <!-- Dust particles -->
+        <div class="dust-particles">
+            <div class="dust"></div>
+            <div class="dust"></div>
+            <div class="dust"></div>
+            <div class="dust"></div>
+            <div class="dust"></div>
+            <div class="dust"></div>
+            <div class="dust"></div>
+            <div class="dust"></div>
+        </div>
+        
+        <!-- Ink drops -->
+        <div class="ink-drop"></div>
+        <div class="ink-drop"></div>
+        <div class="ink-drop"></div>
+        <div class="ink-drop"></div>
+        
+        <!-- Atmospheric fog -->
+        <div class="fog"></div>
+        
+        <!-- Main content -->
+        <div class="hero1-content">
+            <div class="top-symbol">🟂</div>
+            <p class="pre-title">Altius Wealth Partners</p>
+            <h1>ABOUT US</h1>
+            <div class="accent-line"></div>
+            <p class="description">
+                Your Trusted Partner.
+            </p>
+            <div class="bottom-symbol">🟂</div>
+        </div>
+    </section>
+
+      <!--PAGE2-->
+<!-- Vision Text Reveal Section -->
+<section id="vision-reveal" class="vision-reveal-section">
+  <div class="vision-container">
+    <p class="vision-text2">
+      <span class="reveal-word">ALTIUS</span>
+      <span class="reveal-word">Wealth</span>
+      <span class="reveal-word">Partners,</span>
+      <span class="reveal-word">is a trusted</span>
+      <span class="reveal-word">financial firm</span>
+      <span class="reveal-word">founded with a vision</span>
+      <span class="reveal-word">to empower</span>
+      <span class="reveal-word">individuals, families,</span>
+      <span class="reveal-word highlight">and bussiness</span>
+      <span class="reveal-word highlight">to achieve</span>
+      <span class="reveal-word highlight">true financial freedom.</span>
+      <span class="reveal-word highlight">We serve discerning</span>
+      <span class="reveal-word highlight">clients across multiple regions,</span>
+      <span class="reveal-word highlight">offering a global prespective</span>
+      <span class="reveal-word highlight">with localized insights.</span>
+      <span class="reveal-word highlight">Our team combines deep</span>
+      <span class="reveal-word highlight">financial expertise</span>
+      <span class="reveal-word highlight">with a strong commitment</span>
+      <span class="reveal-word highlight">to long-term</span>
+      <span class="reveal-word highlight">client success.</span>
+    </p>
+  </div>
+</section>
+
+<section class="our-process-section about-pillars-section pillars-carousel-section">
+        <div class="our-process-container">
+          <div class="our-process-header">
+            <h2 class="process-heading">Why Altius Wealth Partners?</h2>
+            <p class="process-subheading">
+              Altius Wealth Partners Seasoned Professionals With Proven Track Records across wealth management,
+              investment advisory, and corporate structuring.
+            </p>
+          </div>
+        </div>
+
+          <div class="pillars-carousel-wrapper">
+            <button class="carousel-btn prev-btn" id="prevBtn" aria-label="Previous">
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+           </button>
+           
+           <div class="pillars-carousel" id="pillarsCarousel">
+               <div class="pillar-card glass-pillar">
+                   <h3 class="pillar-title">Experienced Teams</h3>
+                   <p class="pillar-desc">Our team consists of certified professionals with expertise in wealth management, investment banking, corporate advisory, and financial planning.
+                    We hold credentials like CFP®, CFA®, and CPA, and are committed to ongoing development. With experience through various market cycles, we guide clients in achieving their financial goals, having assisted hundreds successfully.
+                   </p>
+                   <div class="pillar-number">{ 01 }</div>
+               </div>
+               
+               <div class="pillar-card glass-pillar">
+                   <h3 class="pillar-title">Personalized Approach</h3>
+                   <p class="pillar-desc">We customize each investor's strategy based on their financial situation, goals, and risk tolerance. Our detailed discovery process focuses on understanding your financial picture and values, ensuring a thoughtful consultation rather than an automated one.
+                    We also regularly update your plan to keep it relevant as circumstances change.</p>
+                   <div class="pillar-number">{ 02 }</div>
+               </div>
+               
+               <div class="pillar-card glass-pillar">
+                   <h3 class="pillar-title">Complete Transparency</h3>
+                   <p class="pillar-desc">We operate transparently on a fee-only basis, with no hidden fees or conflicts of interest. Clients receive detailed performance reports, rationale for investment decisions, and real-time access to accounts through a secure online portal.
+                    We emphasize clear communication, believing informed clients make better decisions.</p>
+                   <div class="pillar-number">{ 03 }</div>
+               </div>
+               
+               <div class="pillar-card glass-pillar">
+                   <h3 class="pillar-title">Proven Track Record</h3>
+                   <p class="pillar-desc">Clients have experienced steady portfolio growth and maintained long-term relationships averaging over 5 years, reflecting high satisfaction. Our investment philosophy emphasizes discipline, diversification, and a long-term view, avoiding market timing.
+                    Clients appreciate the stability and confidence this approach provides.</p>
+                   <div class="pillar-number">{ 04 }</div>
+               </div>
+
+               <div class="pillar-card glass-pillar">
+                   <h3 class="pillar-title">Global Network</h3>
+                   <p class="pillar-desc">We provide global investment access through local market expertise, offering exclusive opportunities for individual investors.
+                    By understanding Indonesia's market conditions and regulations, we identify opportunities, manage risks, and structure investments to achieve international diversification while making informed local decisions.</p>
+                   <div class="pillar-number">{ 05 }</div>
+               </div>
+
+               <div class="pillar-card glass-pillar">
+                   <h3 class="pillar-title">Long-Term Wealth Focus</h3>
+                   <p class="pillar-desc">We focus on long-term wealth building and preservation rather than quick returns. Our strategies adapt to market changes while maintaining core principles.
+                    We promote a decade-long perspective to encourage disciplined decision-making and appropriate risk-taking, ensuring your long-term financial security and freedom.</p>
+                   <div class="pillar-number">{ 06 }</div>
+               </div>
+           </div>
+
+           <button class="carousel-btn next-btn" id="nextBtn" aria-label="Next">
+               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+           </button>
+         </div>
+      </section>
+
+<section class="cloud-cta-section">
+        <div class="cloud-cta-background"></div>
+        <div class="cloud-cta-overlay"></div>
+        <div class="cloud-cta-inner">
+          <div class="cloud-stat-content">
+            <div class="cloud-stat-ring">
+              <div class="cloud-stat-inner">
+                <div class="cloud-stat-number">85+</div>
+                <div class="cloud-stat-label">
+                  Executives placed at<br />
+                  global companies
+                </div>
+              </div>
+              <div class="cloud-stat-orbit cloud-stat-orbit--top"></div>
+              <div class="cloud-stat-orbit cloud-stat-orbit--right"></div>
+              <div class="cloud-stat-orbit cloud-stat-orbit--bottom"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cloud-cta-section">
+        <div class="cloud-cta-background"></div>
+        <div class="cloud-cta-overlay"></div>
+        <div class="cloud-cta-inner">
+          <div class="cloud-cta-orb">
+            <p class="cloud-cta-eyebrow">Startup &amp; scaleup executive search</p>
+            <h3 class="cloud-cta-title">Ready to build your next leadership team?</h3>
+            <a href="index.html#contact" class="cloud-cta-button">
+              <span>Get in touch</span>
+              <span class="cloud-cta-arrow">→</span>
+            </a>
+          </div>
+
+          <div class="cloud-cta-row">
+            <div class="cloud-cta-avatars">
+              <div class="cloud-cta-avatar cloud-cta-avatar--person"></div>
+              <div class="cloud-cta-avatar cloud-cta-avatar--person"></div>
+              <div class="cloud-cta-avatar cloud-cta-avatar--person"></div>
+              <div class="cloud-cta-avatar cloud-cta-avatar--person"></div>
+            </div>
+            <div class="cloud-cta-logos">
+              <div class="cloud-cta-logo">OnZem</div>
+              <div class="cloud-cta-logo">sun-rise</div>
+              <div class="cloud-cta-logo">futurelab</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="clarity-section clarity-section--about">
+        <div class="clarity-bg-overlay"></div>
+        <div class="clarity-container">
+          <div class="clarity-header">
+            <h2 class="clarity-title">
+              <span class="reveal-word">Why</span>
+              <span class="reveal-word">clients</span>
+              <span class="reveal-word">choose</span>
+              <span class="reveal-word">Altius</span>
+            </h2>
+            <p class="clarity-subtitle">
+              We work as an extension of your leadership team, combining market
+              insight, data and human judgement to help you build high-performing,
+              future-ready teams.
+            </p>
+          </div>
+
+          <div class="about-why-grid">
+            <div class="about-why-item">
+              <div class="about-why-index">{ 01. }</div>
+              <h3 class="about-why-title">Future skills</h3>
+              <p class="about-why-text">
+                We focus on roles in AI, digital transformation and new ways of
+                working, so your teams are equipped for where your market is going,
+                not just where it is today.
+              </p>
+            </div>
+            <div class="about-why-item">
+              <div class="about-why-index">{ 02. }</div>
+              <h3 class="about-why-title">Digital-first process</h3>
+              <p class="about-why-text">
+                Cloud-based, automated workflows keep each search structured,
+                documented and visible, with less manual friction for your team.
+              </p>
+            </div>
+            <div class="about-why-item">
+              <div class="about-why-index">{ 03. }</div>
+              <h3 class="about-why-title">Unique positioning</h3>
+              <p class="about-why-text">
+                We combine executive search, talent advisory and an understanding of
+                AI and future-of-work trends to bridge your short-term needs with a
+                long-term talent strategy.
+              </p>
+            </div>
+            <div class="about-why-item">
+              <div class="about-why-index">{ 04. }</div>
+              <h3 class="about-why-title">Growth expertise</h3>
+              <p class="about-why-text">
+                Experience scaling high-growth teams means we understand the pace,
+                ambiguity and expectations that come with rapid expansion.
+              </p>
+            </div>
+            <div class="about-why-item">
+              <div class="about-why-index">{ 05. }</div>
+              <h3 class="about-why-title">Diversity & inclusion</h3>
+              <p class="about-why-text">
+                We intentionally build diverse pipelines and assess for cultural
+                contribution, helping you create teams that think differently and
+                perform better.
+              </p>
+            </div>
+            <div class="about-why-item">
+              <div class="about-why-index">{ 06. }</div>
+              <h3 class="about-why-title">Cultural fit</h3>
+              <p class="about-why-text">
+                We look beyond CVs to understand values, working styles and
+                leadership behaviours, aligning every hire with how your company
+                actually operates.
+              </p>
+            </div>
+            <div class="about-why-item">
+              <div class="about-why-index">{ 07. }</div>
+              <h3 class="about-why-title">Cost-effective delivery</h3>
+              <p class="about-why-text">
+                Our model balances speed, quality and price-to-value, so you can
+                scale teams sustainably without compromising on standards.
+              </p>
+            </div>
+            <div class="about-why-item">
+              <div class="about-why-index">{ 08. }</div>
+              <h3 class="about-why-title">Founder-led insight</h3>
+              <p class="about-why-text">
+                Leadership with backgrounds in recruiting, finance and technology
+                means you get strategic advice on organisation design, not just
+                candidate lists.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+
+
+    </main>
+
+    <script src="./script.js"></script>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+
+
+    <!-- Contact Modal -->
+  <div class="modal" id="contactModal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>Contact Us</h2>
+      <form id="contactForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your Name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Your Email" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+    </div>
+  </div>
+
+  </body>
+</html>

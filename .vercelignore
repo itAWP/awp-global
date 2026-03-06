@@ -1,0 +1,11 @@
+send_email.php
+debug.log
+.env
+.env.*
+.git
+.gitignore
+*.sql
+*.bak
+*.zip
+*.tar.gz
+*.log
