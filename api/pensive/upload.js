@@ -5,21 +5,44 @@
 // browser uploads straight to Blob storage using a short-lived client token
 // this endpoint generates (see @vercel/blob's client-upload pattern).
 //
-// Uses the Web-standard Request/Response signature (required by
-// handleUpload), not the classic (req, res) Node signature.
+// handleUpload() expects a Web-standard Request (it reads request.headers
+// via .get()), but this project's other functions all use Vercel's classic
+// (req, res) Node signature — a bare single-argument "Web Handler" export
+// here was not invoked that way and crashed on every call. So: keep the
+// classic (req, res) signature (proven to work by auth.js/files.js) and
+// build a minimal Request shim to hand handleUpload what it needs.
 
-import { handleUpload } from "@vercel/blob/client";
-import pensiveAuth from "../../lib/pensive-auth.js";
+const { handleUpload } = require("@vercel/blob/client");
+const { verifyToken } = require("../../lib/pensive-auth");
 
-const { verifyToken } = pensiveAuth;
+function toWebRequest(req) {
+  const host = req.headers.host || "localhost";
+  const proto = req.headers["x-forwarded-proto"] || "https";
+  const url = `${proto}://${host}${req.url}`;
 
-export default async function handler(request) {
-  const body = await request.json();
+  const headers = new Headers();
+  for (const [key, value] of Object.entries(req.headers || {})) {
+    if (value == null) continue;
+    headers.set(key, Array.isArray(value) ? value.join(", ") : String(value));
+  }
+
+  return new Request(url, { method: req.method, headers });
+}
+
+module.exports = async function handler(req, res) {
+  let body = req.body;
+  if (typeof body === "string") {
+    try {
+      body = JSON.parse(body);
+    } catch {
+      body = {};
+    }
+  }
 
   try {
     const jsonResponse = await handleUpload({
       body,
-      request,
+      request: toWebRequest(req),
       onBeforeGenerateToken: async (pathname, clientPayload) => {
         const secret = process.env.PENSIVE_PASSCODE;
         let sessionToken = null;
@@ -50,8 +73,8 @@ export default async function handler(request) {
       },
     });
 
-    return Response.json(jsonResponse);
+    return res.status(200).json(jsonResponse);
   } catch (error) {
-    return Response.json({ error: error.message }, { status: 400 });
+    return res.status(400).json({ error: error.message });
   }
-}
+};
