@@ -1,5 +1,7 @@
 // POST /api/pensieve/upload
 // Token-exchange endpoint for direct browser -> Vercel Blob uploads.
+// Staff-only: onBeforeGenerateToken rejects a valid-but-"client"-role
+// session, so clients can view/download/present but never upload.
 // Files can be much larger than the 4.5MB Vercel Function request-body
 // limit because the actual bytes never pass through this function — the
 // browser uploads straight to Blob storage using a short-lived client token
@@ -53,8 +55,12 @@ module.exports = async function handler(req, res) {
           // leave sessionToken null -> rejected below
         }
 
-        if (!secret || !verifyToken(sessionToken, secret)) {
+        const session = secret ? verifyToken(sessionToken, secret) : null;
+        if (!session) {
           throw new Error("Not authenticated");
+        }
+        if (session.role !== "staff") {
+          throw new Error("Only staff can upload files");
         }
 
         return {

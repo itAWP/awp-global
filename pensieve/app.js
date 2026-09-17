@@ -15,6 +15,7 @@ const el = {
   app: document.getElementById("app"),
   signOut: document.getElementById("signOut"),
   uploadBtn: document.getElementById("uploadBtn"),
+  toolbarHint: document.getElementById("toolbarHint"),
   fileInput: document.getElementById("fileInput"),
   status: document.getElementById("status"),
   fileList: document.getElementById("fileList"),
@@ -44,11 +45,15 @@ function getSession() {
   }
 }
 
-function setSession(token, expires, name) {
+function setSession(token, expires, name, role) {
   sessionStorage.setItem(
     STORAGE_KEY,
-    JSON.stringify({ token, expires, name: name || "" }),
+    JSON.stringify({ token, expires, name: name || "", role }),
   );
+}
+
+function isStaff() {
+  return getSession()?.role === "staff";
 }
 
 function clearSession() {
@@ -72,6 +77,13 @@ function showGate(message) {
 function showApp() {
   el.gate.hidden = true;
   el.app.hidden = false;
+
+  const staff = isStaff();
+  el.uploadBtn.hidden = !staff;
+  el.toolbarHint.textContent = staff
+    ? "Upload a PDF, then present it full screen or download it."
+    : "Present a deck full screen, or download it.";
+
   loadFiles();
 }
 
@@ -123,7 +135,7 @@ el.gateForm.addEventListener("submit", async (e) => {
     if (!res.ok || !data.ok) {
       throw new Error(data.error || "Passcode not recognised.");
     }
-    setSession(data.token, data.expires, el.name.value.trim());
+    setSession(data.token, data.expires, el.name.value.trim(), data.role);
     el.pass.value = "";
     showApp();
   } catch (err) {
@@ -167,6 +179,8 @@ function renderFiles(files) {
     return;
   }
 
+  const staff = isStaff();
+
   for (const f of files) {
     const row = document.createElement("div");
     row.className = "file-row";
@@ -179,12 +193,12 @@ function renderFiles(files) {
       <div class="file-actions">
         <button class="icon-btn present">Present</button>
         <button class="icon-btn download">Download</button>
-        <button class="icon-btn danger delete">Delete</button>
+        ${staff ? '<button class="icon-btn danger delete">Delete</button>' : ""}
       </div>
     `;
     row.querySelector(".present").addEventListener("click", () => present(f));
     row.querySelector(".download").addEventListener("click", () => downloadFile(f));
-    row.querySelector(".delete").addEventListener("click", () => deleteFile(f));
+    row.querySelector(".delete")?.addEventListener("click", () => deleteFile(f));
     el.fileList.appendChild(row);
   }
 }

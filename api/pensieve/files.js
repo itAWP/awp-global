@@ -1,7 +1,8 @@
 // /api/pensieve/files
-// GET            -> list uploaded PDFs
-// GET ?name=X    -> stream/download one PDF (add &inline=1 for the viewer)
-// DELETE ?name=X -> remove a PDF
+// GET            -> list uploaded PDFs (client or staff)
+// GET ?name=X    -> stream/download one PDF (client or staff; add &inline=1
+//                    for the viewer)
+// DELETE ?name=X -> remove a PDF (staff only)
 //
 // All three require a valid Bearer session token (issued by
 // POST /api/pensieve/auth) — this is the actual protection, not just a UI gate.
@@ -19,8 +20,9 @@ function getBearerToken(req) {
 module.exports = async function handler(req, res) {
   const secret = process.env.PENSIEVE_PASSCODE;
   const token = getBearerToken(req);
+  const session = secret ? verifyToken(token, secret) : null;
 
-  if (!secret || !verifyToken(token, secret)) {
+  if (!session) {
     return res.status(401).json({ error: "Not authenticated" });
   }
 
@@ -76,6 +78,9 @@ module.exports = async function handler(req, res) {
   }
 
   if (req.method === "DELETE" && pathname) {
+    if (session.role !== "staff") {
+      return res.status(403).json({ error: "Only staff can delete files" });
+    }
     try {
       await del(pathname);
       return res.status(200).json({ ok: true });
