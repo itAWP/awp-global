@@ -1,10 +1,10 @@
-// POST /api/pensive/auth
-// Passcode gate for the /pensive page. Mirrors the /aeroisland pattern but
-// also issues a short-lived signed session token, because /pensive's
+// POST /api/pensieve/auth
+// Passcode gate for the /pensieve page. Mirrors the /aeroisland pattern but
+// also issues a short-lived signed session token, because /pensieve's
 // upload/list/download endpoints must themselves be protected (not just the
 // page UI).
 
-const { makeToken } = require("../../lib/pensive-auth");
+const { makeToken } = require("../../lib/pensieve-auth");
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
@@ -23,7 +23,7 @@ module.exports = async function handler(req, res) {
 
   const passcode =
     typeof body?.passcode === "string" ? body.passcode.trim() : "";
-  const secret = process.env.PENSIVE_PASSCODE;
+  const secret = process.env.PENSIEVE_PASSCODE;
 
   if (!secret) {
     return res.status(503).json({ error: "Passcode not configured" });

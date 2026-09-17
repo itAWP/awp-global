@@ -51,6 +51,11 @@
   ],
   "redirects": [
     {
+      "source": "/pensive",
+      "destination": "/pensieve",
+      "statusCode": 308
+    },
+    {
       "source": "/:path(.*\\.env.*)",
       "destination": "/404.html",
       "statusCode": 404

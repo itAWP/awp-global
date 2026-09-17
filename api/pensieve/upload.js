@@ -1,4 +1,4 @@
-// POST /api/pensive/upload
+// POST /api/pensieve/upload
 // Token-exchange endpoint for direct browser -> Vercel Blob uploads.
 // Files can be much larger than the 4.5MB Vercel Function request-body
 // limit because the actual bytes never pass through this function — the
@@ -13,7 +13,7 @@
 // build a minimal Request shim to hand handleUpload what it needs.
 
 const { handleUpload } = require("@vercel/blob/client");
-const { verifyToken } = require("../../lib/pensive-auth");
+const { verifyToken } = require("../../lib/pensieve-auth");
 
 function toWebRequest(req) {
   const host = req.headers.host || "localhost";
@@ -44,7 +44,7 @@ module.exports = async function handler(req, res) {
       body,
       request: toWebRequest(req),
       onBeforeGenerateToken: async (pathname, clientPayload) => {
-        const secret = process.env.PENSIVE_PASSCODE;
+        const secret = process.env.PENSIEVE_PASSCODE;
         let sessionToken = null;
         try {
           const payload = clientPayload ? JSON.parse(clientPayload) : {};
@@ -60,7 +60,7 @@ module.exports = async function handler(req, res) {
         return {
           allowedContentTypes: ["application/pdf"],
           // The client already namespaces each upload under a random folder
-          // (pensive/<uuid>/<original filename>.pdf), so the pathname is
+          // (pensieve/<uuid>/<original filename>.pdf), so the pathname is
           // already unique — this keeps the displayed filename clean instead
           // of Blob appending its own suffix.
           addRandomSuffix: false,
@@ -69,7 +69,7 @@ module.exports = async function handler(req, res) {
       },
       onUploadCompleted: async () => {
         // Vercel Blob itself is the source of truth for the file list
-        // (see api/pensive/files.js), so there's nothing to persist here.
+        // (see api/pensieve/files.js), so there's nothing to persist here.
       },
     });
 

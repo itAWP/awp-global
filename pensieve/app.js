@@ -1,9 +1,9 @@
-import { upload } from "/pensive/vendor/vercel-blob-client.js";
-import * as pdfjsLib from "/pensive/vendor/pdfjs/pdf.min.mjs";
+import { upload } from "/pensieve/vendor/vercel-blob-client.js";
+import * as pdfjsLib from "/pensieve/vendor/pdfjs/pdf.min.mjs";
 
-pdfjsLib.GlobalWorkerOptions.workerSrc = "/pensive/vendor/pdfjs/pdf.worker.min.mjs";
+pdfjsLib.GlobalWorkerOptions.workerSrc = "/pensieve/vendor/pdfjs/pdf.worker.min.mjs";
 
-const STORAGE_KEY = "pensive.session";
+const STORAGE_KEY = "pensieve.session";
 
 const el = {
   gate: document.getElementById("gate"),
@@ -114,7 +114,7 @@ el.gateForm.addEventListener("submit", async (e) => {
   el.gateSubmit.textContent = "Checking…";
 
   try {
-    const res = await fetch("/api/pensive/auth", {
+    const res = await fetch("/api/pensieve/auth", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ passcode: el.pass.value }),
@@ -145,7 +145,7 @@ el.signOut.addEventListener("click", () => {
 async function loadFiles() {
   setStatus("Loading files…");
   try {
-    const res = await fetch("/api/pensive/files", { headers: authHeader() });
+    const res = await fetch("/api/pensieve/files", { headers: authHeader() });
     if (res.status === 401) {
       clearSession();
       return showGate("Your session expired. Please enter the passcode again.");
@@ -221,11 +221,11 @@ el.fileInput.addEventListener("change", async () => {
     const id =
       window.crypto?.randomUUID?.() ||
       `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-    const pathname = `pensive/${id}/${file.name}`;
+    const pathname = `pensieve/${id}/${file.name}`;
 
     await upload(pathname, file, {
       access: "private",
-      handleUploadUrl: "/api/pensive/upload",
+      handleUploadUrl: "/api/pensieve/upload",
       clientPayload: JSON.stringify({ sessionToken: session.token }),
     });
 
@@ -244,7 +244,7 @@ async function downloadFile(f) {
   setStatus(`Preparing "${displayName(f.name)}"…`);
   try {
     const res = await fetch(
-      `/api/pensive/files?name=${encodeURIComponent(f.name)}`,
+      `/api/pensieve/files?name=${encodeURIComponent(f.name)}`,
       { headers: authHeader() },
     );
     if (!res.ok) throw new Error("Download failed.");
@@ -270,7 +270,7 @@ async function deleteFile(f) {
   setStatus(`Deleting "${displayName(f.name)}"…`);
   try {
     const res = await fetch(
-      `/api/pensive/files?name=${encodeURIComponent(f.name)}`,
+      `/api/pensieve/files?name=${encodeURIComponent(f.name)}`,
       { method: "DELETE", headers: authHeader() },
     );
     if (!res.ok) throw new Error("Could not delete file.");
@@ -297,7 +297,7 @@ async function present(f) {
 
   try {
     const res = await fetch(
-      `/api/pensive/files?name=${encodeURIComponent(f.name)}&inline=1`,
+      `/api/pensieve/files?name=${encodeURIComponent(f.name)}&inline=1`,
       { headers: authHeader() },
     );
     if (!res.ok) throw new Error("Could not open file.");

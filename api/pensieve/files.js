@@ -1,15 +1,15 @@
-// /api/pensive/files
+// /api/pensieve/files
 // GET            -> list uploaded PDFs
 // GET ?name=X    -> stream/download one PDF (add &inline=1 for the viewer)
 // DELETE ?name=X -> remove a PDF
 //
 // All three require a valid Bearer session token (issued by
-// POST /api/pensive/auth) — this is the actual protection, not just a UI gate.
+// POST /api/pensieve/auth) — this is the actual protection, not just a UI gate.
 
 const { list, get, del } = require("@vercel/blob");
-const { verifyToken } = require("../../lib/pensive-auth");
+const { verifyToken } = require("../../lib/pensieve-auth");
 
-const PREFIX = "pensive/";
+const PREFIX = "pensieve/";
 
 function getBearerToken(req) {
   const h = req.headers.authorization || "";
@@ -17,7 +17,7 @@ function getBearerToken(req) {
 }
 
 module.exports = async function handler(req, res) {
-  const secret = process.env.PENSIVE_PASSCODE;
+  const secret = process.env.PENSIEVE_PASSCODE;
   const token = getBearerToken(req);
 
   if (!secret || !verifyToken(token, secret)) {
