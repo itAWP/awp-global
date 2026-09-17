@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <link rel="icon" type="image/png" href="/aeroisland/altius-icon.png" />
+    <title>Pensive · Presentation Library</title>
+    <meta name="description" content="Private presentation library for Altius Wealth Partners." />
+    <style>
+      :root {
+        --navy: #0a1e3f;
+        --navy-2: #0f2a52;
+        --gold: #c8a24a;
+        --ink: #1c2733;
+        --muted: #64748b;
+        --border: #e2e8f0;
+        --bg: #f4f5f7;
+      }
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        padding: 0;
+        min-height: 100%;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: -apple-system, "Segoe UI", Roboto, Inter, Arial, sans-serif;
+      }
+      [hidden] { display: none !important; }
+
+      /* ---------- Gate ---------- */
+      #gate {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .gate-card {
+        width: 100%;
+        max-width: 380px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 32px 28px;
+        box-shadow: 0 10px 30px rgba(10, 30, 63, 0.08);
+      }
+      .gate-eyebrow {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        color: var(--gold);
+        text-transform: uppercase;
+        margin: 0 0 10px;
+      }
+      .gate-card h1 {
+        font-size: 26px;
+        margin: 0 0 8px;
+        color: var(--navy);
+      }
+      .gate-card p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+        margin: 0 0 24px;
+      }
+      label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--ink);
+        margin: 16px 0 6px;
+      }
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 11px 12px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 14px;
+        outline: none;
+        transition: border-color 0.15s;
+      }
+      input:focus { border-color: var(--gold); }
+      .gate-error {
+        margin-top: 14px;
+        font-size: 13px;
+        color: #b42318;
+        background: #fef2f1;
+        border: 1px solid #fbd5d1;
+        border-radius: 8px;
+        padding: 8px 10px;
+      }
+      button {
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .btn {
+        border: none;
+        border-radius: 8px;
+        padding: 11px 16px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .btn-primary {
+        width: 100%;
+        margin-top: 22px;
+        background: var(--navy);
+        color: #fff;
+      }
+      .btn-primary:disabled { opacity: 0.6; cursor: default; }
+      .btn-primary:hover:not(:disabled) { background: var(--navy-2); }
+
+      /* ---------- App shell ---------- */
+      #app { min-height: 100vh; }
+      header.top {
+        background: var(--navy);
+        color: #fff;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      header.top .brand {
+        display: flex;
+        align-items: baseline;
+        gap: 10px;
+      }
+      header.top .brand strong { font-size: 18px; letter-spacing: 0.02em; }
+      header.top .brand span { font-size: 12px; color: #b9c3d6; }
+      #signOut {
+        background: transparent;
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 8px;
+        padding: 8px 14px;
+        font-size: 13px;
+      }
+      #signOut:hover { background: rgba(255,255,255,0.1); }
+
+      main {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 28px 20px 60px;
+      }
+      .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+      }
+      .toolbar h2 { margin: 0; font-size: 20px; color: var(--navy); }
+      .toolbar p.hint { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+
+      #uploadBtn {
+        background: var(--gold);
+        color: #2b2409;
+        white-space: nowrap;
+      }
+      #uploadBtn:hover { filter: brightness(0.95); }
+      #uploadBtn:disabled { opacity: 0.6; cursor: default; }
+
+      #status {
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 14px;
+        min-height: 18px;
+      }
+      #status.error { color: #b42318; }
+
+      .file-list { display: flex; flex-direction: column; gap: 10px; }
+      .file-row {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 14px 16px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .file-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: #fdf3e0;
+        color: var(--gold);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        font-weight: 700;
+        flex: none;
+      }
+      .file-meta { flex: 1; min-width: 0; }
+      .file-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--ink);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .file-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+      .file-actions { display: flex; gap: 8px; flex: none; }
+      .icon-btn {
+        border: 1px solid var(--border);
+        background: #fff;
+        border-radius: 7px;
+        padding: 7px 11px;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .icon-btn:hover { background: #f1f5f9; }
+      .icon-btn.present { background: var(--navy); color: #fff; border-color: var(--navy); }
+      .icon-btn.present:hover { background: var(--navy-2); }
+      .icon-btn.danger { color: #b42318; }
+      .icon-btn.danger:hover { background: #fef2f1; }
+
+      .empty {
+        text-align: center;
+        color: var(--muted);
+        font-size: 14px;
+        padding: 60px 20px;
+        border: 1px dashed var(--border);
+        border-radius: 12px;
+        background: #fff;
+      }
+
+      /* ---------- Presentation overlay ---------- */
+      #presenter {
+        position: fixed;
+        inset: 0;
+        background: #000;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      #presenter canvas {
+        max-width: 100%;
+        max-height: calc(100vh - 56px);
+        box-shadow: 0 0 40px rgba(0,0,0,0.5);
+      }
+      #presenterBar {
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 16px;
+        color: #cbd5e1;
+        font-size: 13px;
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0));
+      }
+      #presenterBar .title { max-width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      #presenterBar button {
+        background: rgba(255,255,255,0.08);
+        color: #fff;
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 6px;
+        padding: 6px 10px;
+        font-size: 13px;
+      }
+      #presenterBar button:hover { background: rgba(255,255,255,0.16); }
+      #presenterNav {
+        position: absolute;
+        bottom: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        color: #cbd5e1;
+        font-size: 13px;
+        background: rgba(0,0,0,0.4);
+        padding: 8px 16px;
+        border-radius: 999px;
+      }
+      #presenterNav button {
+        background: rgba(255,255,255,0.1);
+        color: #fff;
+        border: none;
+        border-radius: 999px;
+        width: 32px;
+        height: 32px;
+        font-size: 15px;
+      }
+      #presenterNav button:hover { background: rgba(255,255,255,0.2); }
+      #presenterNav button:disabled { opacity: 0.35; cursor: default; }
+      #presenterLoading {
+        color: #cbd5e1;
+        font-size: 14px;
+      }
+
+      @media (max-width: 480px) {
+        .file-row { flex-wrap: wrap; }
+        .file-actions { width: 100%; justify-content: flex-end; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Passcode gate -->
+    <div id="gate">
+      <form class="gate-card" id="gateForm" autocomplete="off">
+        <p class="gate-eyebrow">Restricted access</p>
+        <h1>Pensive</h1>
+        <p>Private presentation library. Enter the passcode you were given.</p>
+
+        <label for="p-name">Your name (optional)</label>
+        <input type="text" id="p-name" placeholder="e.g. Rezky" />
+
+        <label for="p-pass">Passcode</label>
+        <input type="password" id="p-pass" required />
+
+        <div class="gate-error" id="gateError" hidden></div>
+        <button class="btn btn-primary" id="gateSubmit" type="submit">Enter</button>
+      </form>
+    </div>
+
+    <!-- Main app -->
+    <div id="app" hidden>
+      <header class="top">
+        <div class="brand">
+          <strong>Pensive</strong>
+          <span>Presentation library</span>
+        </div>
+        <button id="signOut">Sign out</button>
+      </header>
+
+      <main>
+        <div class="toolbar">
+          <div>
+            <h2>Presentations</h2>
+            <p class="hint">Upload a PDF, then present it full screen or download it.</p>
+          </div>
+          <button class="btn" id="uploadBtn">+ Upload PDF</button>
+          <input type="file" id="fileInput" accept="application/pdf" hidden />
+        </div>
+
+        <div id="status"></div>
+        <div class="file-list" id="fileList"></div>
+      </main>
+    </div>
+
+    <!-- Fullscreen presenter -->
+    <div id="presenter" hidden>
+      <div id="presenterBar">
+        <div class="title" id="presenterTitle"></div>
+        <button id="presenterClose">Close ✕</button>
+      </div>
+      <div id="presenterLoading">Loading…</div>
+      <canvas id="presenterCanvas" hidden></canvas>
+      <div id="presenterNav" hidden>
+        <button id="prevPage" aria-label="Previous page">‹</button>
+        <span id="pageIndicator">1 / 1</span>
+        <button id="nextPage" aria-label="Next page">›</button>
+      </div>
+    </div>
+
+    <script type="module" src="/pensive/app.js"></script>
+  </body>
+</html>
