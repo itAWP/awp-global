@@ -56,8 +56,8 @@ module.exports = async function handler(req, res) {
         return list;
       });
       return res.status(200).json({ investors: next });
-    } catch {
-      return res.status(500).json({ error: "Could not save investor — please try again." });
+    } catch (err) {
+      return res.status(500).json({ error: "Could not save investor — please try again.", debug: String(err && err.message || err) });
     }
   }
 
