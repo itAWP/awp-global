@@ -47,6 +47,14 @@
     {
       "source": "/send_email.php",
       "destination": "/404.html"
+    },
+    {
+      "source": "/internal_pensieve",
+      "destination": "https://awp-internal-pensieve.vercel.app/internal_pensieve"
+    },
+    {
+      "source": "/internal_pensieve/:path*",
+      "destination": "https://awp-internal-pensieve.vercel.app/internal_pensieve/:path*"
     }
   ],
   "redirects": [
