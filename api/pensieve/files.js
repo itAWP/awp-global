@@ -86,15 +86,39 @@ module.exports = async function handler(req, res) {
   if (req.method === "GET") {
     try {
       const { blobs } = await list({ prefix: PREFIX });
-      const files = blobs
+      const candidates = blobs
         .filter((b) => b.pathname.length > PREFIX.length)
         .map((b) => ({
           id: b.url,
           name: displayNameFromPathname(b.pathname),
           size: b.size,
           uploadedAt: b.uploadedAt,
-        }))
-        .sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt));
+        }));
+
+      // list()'s own index can lag a delete by many minutes, well past
+      // get()/del()'s useCache:false window — cross-check each candidate
+      // sequentially (a prior parallel version of this check spuriously
+      // failed every entry at once, real files included; sequential is
+      // slower but has actually been verified safe) against that more-
+      // current source before trusting the listing.
+      const files = [];
+      for (const f of candidates) {
+        try {
+          const result = await get(f.id, { access: "private", useCache: false });
+          if (result && result.stream) {
+            try {
+              await result.stream.cancel();
+            } catch {
+              // draining/cancelling is best-effort; the existence check already succeeded
+            }
+            files.push(f);
+          }
+        } catch {
+          // treat a failed check as "couldn't confirm" — skip rather than risk a ghost
+        }
+      }
+
+      files.sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt));
       return res.status(200).json({ files });
     } catch {
       return res.status(500).json({ error: "Could not list files" });
