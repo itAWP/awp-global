@@ -21,21 +21,23 @@ function getBearerToken(req) {
   return h.startsWith("Bearer ") ? h.slice(7).trim() : null;
 }
 
-// Vercel Blob's list() reports a pathname's spaces as "+" rather than the
-// literal space get()/del() expect, and does it losslessly-ambiguously — a
-// filename with a real "+" in it is indistinguishable from an encoded
-// space once list() has reported it. So: never reconstruct a lookup key
-// from list()'s pathname string. Instead use the blob's own full url as
-// the opaque, unambiguous identifier for get()/del(), and recover a clean
-// display name by percent-decoding the *url*'s path segment (which is
-// properly percent-encoded, unlike the pathname field).
-function displayNameFromUrl(url) {
+// A raw space in an upload pathname gets silently turned into a literal
+// "+" in the actually-stored key by Vercel Blob's own client-upload path
+// (confirmed by re-fetching an uploaded blob) — not just a list()/display
+// quirk, and indistinguishable afterwards from a real "+" the filename
+// might contain. The upload side (pensieve/app.js) now pre-encodes the
+// filename with encodeURIComponent before it ever reaches upload(), so no
+// ambiguous raw character reaches Blob's storage layer — this just
+// decodes that same segment back for display. Files uploaded before that
+// fix shipped will still show their space as "+" here; that's cosmetic
+// only, since download/present/delete all key off the blob's own url
+// (see `id` below), not this display name.
+function displayNameFromPathname(pathname) {
+  const seg = pathname.slice(PREFIX.length);
   try {
-    const path = decodeURIComponent(new URL(url).pathname);
-    const idx = path.indexOf(PREFIX);
-    return idx >= 0 ? path.slice(idx + PREFIX.length) : path.slice(1);
+    return decodeURIComponent(seg);
   } catch {
-    return url;
+    return seg;
   }
 }
 
@@ -58,7 +60,7 @@ module.exports = async function handler(req, res) {
       }
 
       const disposition = req.query.inline === "1" ? "inline" : "attachment";
-      const safeName = displayNameFromUrl(id).split("/").pop().replace(/"/g, "");
+      const safeName = displayNameFromPathname(result.blob.pathname).split("/").pop().replace(/"/g, "");
       res.setHeader(
         "Content-Type",
         result.blob.contentType || "application/pdf",
@@ -88,7 +90,7 @@ module.exports = async function handler(req, res) {
         .filter((b) => b.pathname.length > PREFIX.length)
         .map((b) => ({
           id: b.url,
-          name: displayNameFromUrl(b.url),
+          name: displayNameFromPathname(b.pathname),
           size: b.size,
           uploadedAt: b.uploadedAt,
         }))

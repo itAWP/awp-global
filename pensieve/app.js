@@ -235,7 +235,13 @@ el.fileInput.addEventListener("change", async () => {
     const id =
       window.crypto?.randomUUID?.() ||
       `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-    const pathname = `pensieve/${id}/${file.name}`;
+    // Vercel Blob's own upload path silently turns a raw space in the
+    // pathname into a literal "+" in the stored key (not just a display
+    // quirk — confirmed by re-fetching the blob afterwards), which is then
+    // indistinguishable from a real "+" the filename might contain. Pre-
+    // encoding here means nothing ambiguous ever reaches it; files.js
+    // decodeURIComponent()s this same segment back for display.
+    const pathname = `pensieve/${id}/${encodeURIComponent(file.name)}`;
 
     await upload(pathname, file, {
       access: "private",
