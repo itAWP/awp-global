@@ -34,9 +34,15 @@ module.exports = async function handler(req, res) {
       // useCache: false — a GET right after an upload (or after another
       // viewer's action) can otherwise be served a stale/negative cached
       // result and 404 on a file list() just confirmed exists.
-      const result = await get(pathname, { access: "private", useCache: false });
+      let result;
+      let getErr = null;
+      try {
+        result = await get(pathname, { access: "private", useCache: false });
+      } catch (e) {
+        getErr = String(e && e.message || e);
+      }
       if (!result || !result.stream) {
-        return res.status(404).json({ error: "Not found" });
+        return res.status(404).json({ error: "Not found", debug2: getErr, pathname, hasResult: !!result });
       }
 
       const disposition = req.query.inline === "1" ? "inline" : "attachment";
