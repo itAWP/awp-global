@@ -33,7 +33,7 @@ module.exports = async function handler(req, res) {
     try {
       const result = await get(pathname, { access: "private" });
       if (!result || !result.stream) {
-        return res.status(404).json({ error: "Not found" });
+        return res.status(404).json({ error: "Not found", debug: "no-stream", pathname, hasResult: !!result });
       }
 
       const disposition = req.query.inline === "1" ? "inline" : "attachment";
