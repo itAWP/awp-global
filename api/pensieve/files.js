@@ -31,18 +31,9 @@ module.exports = async function handler(req, res) {
 
   if (req.method === "GET" && pathname) {
     try {
-      // useCache: false — a GET right after an upload (or after another
-      // viewer's action) can otherwise be served a stale/negative cached
-      // result and 404 on a file list() just confirmed exists.
-      let result;
-      let getErr = null;
-      try {
-        result = await get(pathname, { access: "private", useCache: false });
-      } catch (e) {
-        getErr = String(e && e.message || e);
-      }
+      const result = await get(pathname, { access: "private", useCache: false });
       if (!result || !result.stream) {
-        return res.status(404).json({ error: "Not found", debug2: getErr, pathname, hasResult: !!result });
+        return res.status(404).json({ error: "Not found" });
       }
 
       const disposition = req.query.inline === "1" ? "inline" : "attachment";
@@ -75,7 +66,10 @@ module.exports = async function handler(req, res) {
       const files = blobs
         .filter((b) => b.pathname.length > PREFIX.length)
         .map((b) => ({
-          name: b.pathname.slice(PREFIX.length),
+          // list() reports spaces in the pathname as "+" (form-encoding
+          // style) rather than the literal space get()/del() expect —
+          // decode it back so the name we hand the client round-trips.
+          name: b.pathname.slice(PREFIX.length).replace(/\+/g, " "),
           size: b.size,
           uploadedAt: b.uploadedAt,
         }))
