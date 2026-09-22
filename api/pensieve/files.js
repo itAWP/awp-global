@@ -31,9 +31,12 @@ module.exports = async function handler(req, res) {
 
   if (req.method === "GET" && pathname) {
     try {
-      const result = await get(pathname, { access: "private" });
+      // useCache: false — a GET right after an upload (or after another
+      // viewer's action) can otherwise be served a stale/negative cached
+      // result and 404 on a file list() just confirmed exists.
+      const result = await get(pathname, { access: "private", useCache: false });
       if (!result || !result.stream) {
-        return res.status(404).json({ error: "Not found", debug: "no-stream", pathname, hasResult: !!result });
+        return res.status(404).json({ error: "Not found" });
       }
 
       const disposition = req.query.inline === "1" ? "inline" : "attachment";
@@ -55,8 +58,8 @@ module.exports = async function handler(req, res) {
         res.write(Buffer.from(value));
       }
       return res.end();
-    } catch (err) {
-      return res.status(404).json({ error: "Not found", debug: String(err && err.message || err), pathname });
+    } catch {
+      return res.status(404).json({ error: "Not found" });
     }
   }
 
