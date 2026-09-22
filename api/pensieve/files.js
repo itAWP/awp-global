@@ -55,8 +55,8 @@ module.exports = async function handler(req, res) {
         res.write(Buffer.from(value));
       }
       return res.end();
-    } catch {
-      return res.status(404).json({ error: "Not found" });
+    } catch (err) {
+      return res.status(404).json({ error: "Not found", debug: String(err && err.message || err), pathname });
     }
   }
 
