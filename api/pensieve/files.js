@@ -86,14 +86,41 @@ module.exports = async function handler(req, res) {
   if (req.method === "GET") {
     try {
       const { blobs } = await list({ prefix: PREFIX });
-      const files = blobs
+      const candidates = blobs
         .filter((b) => b.pathname.length > PREFIX.length)
         .map((b) => ({
           id: b.url,
           name: displayNameFromPathname(b.pathname),
           size: b.size,
           uploadedAt: b.uploadedAt,
-        }))
+        }));
+
+      // list()'s own index can lag well behind a delete (observed several
+      // minutes stale in practice, not just the usual ~60s CDN window) —
+      // a deleted file can keep showing up here long after get() (with
+      // useCache:false) already reports it gone. Cross-check each
+      // candidate against that more-current source before trusting the
+      // listing, since a resurrected "ghost" file that can't actually be
+      // opened or deleted is worse than the extra round trips cost here.
+      // This library is small (presentation decks, not a bulk archive),
+      // so the per-file check is cheap in practice.
+      const checked = await Promise.all(
+        candidates.map(async (f) => {
+          try {
+            const result = await get(f.id, { access: "private", useCache: false });
+            if (result && result.stream) {
+              result.stream.cancel().catch(() => {});
+              return f;
+            }
+            return null;
+          } catch {
+            return null;
+          }
+        }),
+      );
+
+      const files = checked
+        .filter(Boolean)
         .sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt));
       return res.status(200).json({ files });
     } catch {
