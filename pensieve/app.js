@@ -258,7 +258,7 @@ async function downloadFile(f) {
   setStatus(`Preparing "${displayName(f.name)}"…`);
   try {
     const res = await fetch(
-      `/api/pensieve/files?name=${encodeURIComponent(f.name)}`,
+      `/api/pensieve/files?id=${encodeURIComponent(f.id)}`,
       { headers: authHeader() },
     );
     if (!res.ok) throw new Error("Download failed.");
@@ -284,7 +284,7 @@ async function deleteFile(f) {
   setStatus(`Deleting "${displayName(f.name)}"…`);
   try {
     const res = await fetch(
-      `/api/pensieve/files?name=${encodeURIComponent(f.name)}`,
+      `/api/pensieve/files?id=${encodeURIComponent(f.id)}`,
       { method: "DELETE", headers: authHeader() },
     );
     if (!res.ok) throw new Error("Could not delete file.");
@@ -311,7 +311,7 @@ async function present(f) {
 
   try {
     const res = await fetch(
-      `/api/pensieve/files?name=${encodeURIComponent(f.name)}&inline=1`,
+      `/api/pensieve/files?id=${encodeURIComponent(f.id)}&inline=1`,
       { headers: authHeader() },
     );
     if (!res.ok) throw new Error("Could not open file.");
