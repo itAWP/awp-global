@@ -55,6 +55,14 @@
     {
       "source": "/internal_pensieve/:path*",
       "destination": "https://awp-internal-pensieve.vercel.app/internal_pensieve/:path*"
+    },
+    {
+      "source": "/IntelligenceDashboard",
+      "destination": "https://altius-intelligence.vercel.app/IntelligenceDashboard"
+    },
+    {
+      "source": "/IntelligenceDashboard/:path*",
+      "destination": "https://altius-intelligence.vercel.app/IntelligenceDashboard/:path*"
     }
   ],
   "redirects": [
