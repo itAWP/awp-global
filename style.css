@@ -4848,3 +4848,93 @@ body {
 }
 
 /*-------------------------------------------Cloud------------------------------------------*/
+
+/* ==================== LUXURY DESKTOP NAV ==================== */
+@media (min-width: 993px) {
+  .navbar .navbar-nav {
+    gap: 6px;
+  }
+
+  .navbar .nav-icon {
+    display: none;
+  }
+
+  .navbar .nav-link {
+    font-family: "Cinzel", "Trajan Pro", Georgia, serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #13294b;
+    padding: 12px 18px;
+    border-radius: 0;
+    background: none;
+    overflow: visible;
+  }
+
+  .navbar .nav-link::before {
+    content: '';
+    top: auto;
+    bottom: 4px;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    opacity: 1;
+    border-radius: 0;
+    background: linear-gradient(90deg, transparent, #b8975a, transparent);
+    transform: translateX(-50%);
+    transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .navbar .nav-link:hover,
+  .navbar .nav-link.active {
+    color: #8a6a32;
+    background: none;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .navbar .nav-link:hover::before,
+  .navbar .nav-link.active::before {
+    width: 70%;
+  }
+
+  .navbar .nav-item + .nav-item::after {
+    content: '';
+    position: absolute;
+    left: -3px;
+    top: 50%;
+    width: 4px;
+    height: 4px;
+    background: #c9ab72;
+    opacity: 0.55;
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .navbar .nav-item:has(.cta-button)::after {
+    display: none;
+  }
+
+  .navbar .cta-button {
+    font-family: "Cinzel", "Trajan Pro", Georgia, serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #ecd9ae;
+    padding: 12px 26px;
+    margin-left: 14px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #1b3561, #0b1c36);
+    border: 1px solid rgba(201, 171, 114, 0.7);
+    box-shadow: 0 6px 18px rgba(11, 28, 54, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .navbar .cta-button:hover {
+    color: #0b1c36;
+    background: linear-gradient(135deg, #e6cf9c, #b8975a);
+    border-color: #b8975a;
+    box-shadow: 0 10px 24px rgba(184, 151, 90, 0.35);
+    transform: translateY(-1px);
+  }
+}
