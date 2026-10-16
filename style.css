@@ -383,7 +383,7 @@ body {
             width: 35px;
             height: 35px;
             /*background: rgba(255, 255, 255, 0.9);*/
-            background-image: url('./img/altius-icn.png');
+            background-image: url('./img/altius-mark.png');
             background-size: cover;
             border-radius: 50%;
             animation: logo-pulse 2s ease-in-out infinite;
@@ -1579,7 +1579,7 @@ body {
             position: absolute;
             width: 35px;
             height: 35px;
-            background-image: url('./img/altius-icn.png');
+            background-image: url('./img/altius-mark.png');
             background-size: cover;
             border-radius: 50%;
             animation: logo-pulse 2s ease-in-out infinite;
