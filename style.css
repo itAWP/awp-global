@@ -383,7 +383,7 @@ body {
             width: 35px;
             height: 35px;
             /*background: rgba(255, 255, 255, 0.9);*/
-            background-image: url('./img/icn.png');
+            background-image: url('./img/altius-icn.png');
             background-size: cover;
             border-radius: 50%;
             animation: logo-pulse 2s ease-in-out infinite;
@@ -391,6 +391,7 @@ body {
 
         .logo {
             width: 150px;
+            height: auto;
         }
 
         @keyframes logo-pulse {
@@ -1578,7 +1579,7 @@ body {
             position: absolute;
             width: 35px;
             height: 35px;
-            background-image: url('./img/icn.png');
+            background-image: url('./img/altius-icn.png');
             background-size: cover;
             border-radius: 50%;
             animation: logo-pulse 2s ease-in-out infinite;
@@ -2315,7 +2316,7 @@ body {
         
         /* Main title */
 .hero1 h1 {
-            font-family: "Futura", "Futura PT", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-family: "Cinzel", "Trajan Pro", Georgia, serif;
             font-size: clamp(60px, 10vw, 110px);
             font-weight: 400;
             letter-spacing: 18px;
@@ -3827,7 +3828,7 @@ body {
             font-size: 2.5rem;
             font-weight: 500;
             background:#051C2C;
-            font-family: "Futura", "Futura PT", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-family: "Cinzel", "Trajan Pro", Georgia, serif;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
