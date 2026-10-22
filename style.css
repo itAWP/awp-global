@@ -5150,7 +5150,7 @@ body,
 }
 
 /* ==================== THE ASCENT — 3D PROCESS ==================== */
-.ascent3d { position: relative; height: 520vh; }
+.ascent3d { position: relative; height: 940vh; } /* climb + valley values + rise */
 .ascent3d-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .ascent3d-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block;
   background: transparent; } /* the page-wide sky (sky.js) shows behind the mountain */
@@ -5459,25 +5459,22 @@ body {
   }
 }
 
-/* ==================== THE VALUES — GLASS MONOLITHS ==================== */
-.values3d { position: relative; height: 440vh; }
-.values3d-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
-.values3d-canvas {
-  position: absolute; inset: 0; width: 100%; height: 100%; display: block; background: transparent;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 82%, transparent 100%),
-    linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 82%, transparent 100%),
-    linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
-  mask-composite: intersect;
-}
-.values3d .a3d-steps { min-height: 17rem; }
+/* The journey swaps between the Process and Values text groups */
+.a3d-group { transition: opacity .6s ease, visibility .6s ease; }
+.a3d-group.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.a3d-group-values .a3d-steps { min-height: 17rem; }
 
 @media (max-width: 768px) {
-  .values3d .a3d-steps { min-height: 14.5rem; }
+  .a3d-group-values .a3d-steps { min-height: 14.5rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .values3d { height: auto; }
-  .values3d-sticky { position: relative; height: auto; min-height: 100vh; }
+  .a3d-group.is-hidden { opacity: 1; visibility: visible; pointer-events: auto; }
+}
+
+/* The section depth zoom briefly scales content above 100%; never let that
+   widen the page on phones. clip (unlike hidden) keeps position: sticky working. */
+html,
+body {
+  overflow-x: clip;
 }
