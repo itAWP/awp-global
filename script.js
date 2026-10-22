@@ -287,12 +287,19 @@ const initializePanelCarousels = () => {
       const scrollProgress = (scrollTop - parentTop) / (parentHeight - viewportHeight);
       const clampedProgress = Math.max(0, Math.min(1, scrollProgress));
 
+      // The container is position:fixed and parked just off the right edge; its
+      // rotated first card used to peek into view on every other section.
+      const sectionInView = parentRect.top < viewportHeight && parentRect.bottom > 0;
+      scrollContainer.style.visibility = sectionInView && clampedProgress > 0 ? "visible" : "hidden";
+
       if (stickyHeading) {
         stickyHeading.style.opacity = 1 - Math.min(1, clampedProgress * 2);
       }
 
       if (clampedProgress > 0 && clampedProgress <= 0.5) {
         scrollContainer.style.right = "0";
+        // Undo the horizontal slide from the second half when scrolling back up.
+        scrollContainer.style.transform = "translateY(-50%) translateX(0)";
         const individualProgress = Math.max(0, Math.min(1, clampedProgress * 2));
         panels.forEach((panel) => {
           panel.style.transform = `translateX(${(1 - individualProgress) * 100}%) ${calculateCardTransform(panel)}`;
