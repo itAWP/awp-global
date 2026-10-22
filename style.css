@@ -5310,3 +5310,151 @@ body {
     linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
   mask-composite: intersect;
 }
+
+/* ==================== READABILITY OVER THE SKY + MOBILE POLISH ==================== */
+/* Cards: deeper blue so white text reads against the light cloud sky. */
+.roadmap-section .glass-card,
+.scroll-container .panel {
+  background: linear-gradient(180deg, #7896b3 0%, #52718f 100%);
+  border-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 24px 50px rgba(19, 41, 75, 0.18);
+}
+
+.roadmap-section .glass-card::before {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* About statement: navy words with gold emphasis instead of pale blue on white. */
+.vision-text {
+  font-family: "Jost", "Futura", "Trebuchet MS", sans-serif;
+  font-weight: 300;
+}
+
+.reveal-word {
+  color: #22406a;
+  opacity: 0.18;
+}
+
+.reveal-word.highlight {
+  color: #8a6a32;
+}
+
+.reveal-word.active {
+  opacity: 1;
+}
+
+/* Values heading reads as navy, not faint blue. */
+.sticky-heading {
+  color: #13294b;
+}
+
+/* Mobile menu: same restrained, luxury voice as the desktop navbar. */
+.mobile-menu {
+  background: linear-gradient(180deg, rgba(242, 246, 251, 0.97) 0%, rgba(226, 235, 244, 0.97) 100%);
+}
+
+.mobile-menu-nav {
+  padding: 24px 28px;
+}
+
+.mobile-menu-item {
+  margin: 0;
+}
+
+.mobile-menu-link {
+  justify-content: space-between;
+  margin: 0;
+  padding: 20px 4px;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid rgba(19, 41, 75, 0.12);
+  border-radius: 0;
+  font-family: "Cinzel", "Trajan Pro", Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #13294b;
+}
+
+.mobile-menu-link::after {
+  content: "\2192";
+  font-family: "Jost", sans-serif;
+  color: #b8975a;
+}
+
+.mobile-menu-link:hover,
+.mobile-menu-link.active {
+  background: none;
+  color: #8a6a32;
+  border-color: rgba(184, 151, 90, 0.45);
+  box-shadow: none;
+  transform: none;
+}
+
+.mobile-menu-icon {
+  display: none;
+}
+
+.mobile-cta-button {
+  padding: 18px;
+  border-radius: 40px;
+  background: linear-gradient(135deg, #1b3561, #0b1c36);
+  border: 1px solid rgba(201, 171, 114, 0.7);
+  color: #ecd9ae;
+  font-family: "Cinzel", "Trajan Pro", Georgia, serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  /* Values: heading sits above the card strip instead of behind it */
+  .sticky-heading {
+    top: 14% !important;
+    font-size: 30px;
+    line-height: 1.25;
+  }
+
+  .scroll-container .panel {
+    margin: 0 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Track Record: three stats on one row, no orphan */
+  .stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .stats-section .stat-number {
+    font-size: 2.1rem;
+  }
+
+  .stats-section .stat-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    line-height: 1.5;
+  }
+
+  /* Footer: a quiet row of text links instead of stacked white buttons */
+  .footer-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 22px;
+    padding: 4px 0;
+  }
+
+  .footer-link {
+    width: auto;
+    padding: 6px 0;
+    background: none;
+    border-radius: 0;
+    font-family: "Jost", sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+}
