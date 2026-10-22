@@ -287,9 +287,16 @@ function mountAscent3D(section) {
 
     // ---------- steps ----------
     let current = -1;
+    const markNo = section.querySelector(".a3d-mark-no");
+    const navItems = Array.from(section.querySelectorAll(".a3d-nav-item"));
     const setStep = (index) => {
       if (index === current) return;
       current = index;
+      if (markNo) markNo.textContent = String(index + 1).padStart(2, "0");
+      navItems.forEach((n, i) => {
+        n.classList.toggle("is-active", i === index);
+        if (i === index) n.setAttribute("aria-current", "step"); else n.removeAttribute("aria-current");
+      });
       steps.forEach((s, i) => {
         s.classList.toggle("is-active", i === index);
         if (i === index) s.setAttribute("aria-current", "step"); else s.removeAttribute("aria-current");
@@ -302,6 +309,18 @@ function mountAscent3D(section) {
         c.marker.material.emissive.set(reached ? 0x5a4520 : 0x000000);
       });
     };
+
+    // Step nav: jump to the scroll position where that step's marker is reached.
+    navItems.forEach((item, i) => {
+      item.addEventListener("click", () => {
+        const travel = section.offsetHeight - window.innerHeight;
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+        const raw = Math.min(0.97, 0.1 + 0.8 * stops[i] + 0.01);
+        const target = sectionTop + travel * raw;
+        if (window.lenis) window.lenis.scrollTo(target, { duration: 1.6 });
+        else window.scrollTo({ top: target, behavior: "smooth" });
+      });
+    });
 
     // ---------- loop ----------
     let progress = reduced ? 1 : 0, shown = 0;

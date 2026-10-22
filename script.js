@@ -191,11 +191,7 @@ const setupRoadmapStepHover = () => {
     if (!card) return;
     const activate = () => {
       setActiveStep(index);
-      const rect = card.getBoundingClientRect();
-      window.scrollTo({
-        top: rect.top + window.scrollY - window.innerHeight * 0.1,
-        behavior: "smooth"
-      });
+      scrollToTarget(card, -window.innerHeight * 0.1);
     };
     // Hover only highlights; scrolling the page on hover was jarring.
     step.addEventListener("mouseenter", () => setActiveStep(index));
@@ -441,7 +437,7 @@ const setupMobileNav = () => {
     anchor.addEventListener('click', function(e) {
       e.preventDefault();
       const target = document.querySelector(this.getAttribute('href'));
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (target) scrollToTarget(target);
     });
   });
 
@@ -461,7 +457,7 @@ const setupContactModal = () => {
   const modal = document.getElementById("contactModal");
   if (!modal) return;
 
-  const ctaButtons = document.querySelectorAll(".cta-button, .mobile-cta-button, .cloud-cta-button");
+  const ctaButtons = document.querySelectorAll(".cta-button, .mobile-cta-button, .cloud-cta-button, .a3d-cta");
   const closeModal = document.querySelector(".close-modal");
   const contactForm = document.getElementById("contactForm");
 
@@ -568,88 +564,87 @@ const setupLoader = () => {
   }
 };
 
-// ==================== CLOUD FLY-THROUGH BETWEEN SECTIONS ====================
-// Scroll-linked: as a section boundary crosses the middle of the screen,
-// cloud puffs grow out of the distance, cover the view, and stream past the
-// edges, so moving to the next section feels like flying through a cloud.
-const setupCloudTransitions = () => {
+// ==================== SMOOTH SCROLL (LENIS) ====================
+// Inertial scrolling like mont-fort.com. Lenis drives the native scroll position,
+// so every scroll listener on the page keeps working unchanged.
+const setupSmoothScroll = () => {
+  if (typeof Lenis === "undefined") return;
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const lenis = new Lenis({ lerp: 0.085, smoothWheel: true, wheelMultiplier: 0.9 });
+  window.lenis = lenis;
+  if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+  } else {
+    const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf); };
+    requestAnimationFrame(raf);
+  }
+};
 
-  // The hero already ends in a cloud bank, so the first fly-through is
-  // into Services rather than the short About text right after the hero.
-  const boundaries = [
-    "#roadmap-section", "#tl-container",
-    ".scroll-container-parent", ".stats-section"
-  ].map(sel => document.querySelector(sel)).filter(Boolean);
-  if (!boundaries.length) return;
+const scrollToTarget = (target, offset = 0) => {
+  if (window.lenis) window.lenis.scrollTo(target, { offset });
+  else {
+    const top = (typeof target === "number" ? target : target.getBoundingClientRect().top + window.scrollY) + offset;
+    window.scrollTo({ top, behavior: "smooth" });
+  }
+};
 
-  const layer = document.createElement("div");
-  layer.className = "cloud-transition";
-  layer.setAttribute("aria-hidden", "true");
-  const veil = document.createElement("div");
-  veil.className = "cloud-transition-veil";
-  layer.appendChild(veil);
+// ==================== SECTION DEPTH (ZOOM INTO / OUT OF THE CLOUDS) ====================
+// Like mont-fort.com: as you leave a section its content shrinks away and fades
+// into the cloud sky behind it (sky.js thickens the clouds at the boundary), and
+// the next section comes forward out of the clouds to full size. Uses the
+// independent `scale` property and filter: opacity() so it never fights the
+// transforms/opacity that other scripts already set on these elements.
+const setupSectionDepth = () => {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const small = window.matchMedia("(max-width: 768px)").matches;
+  const depth = small ? 0.08 : 0.12;
 
-  // Each puff flies out from near the centre along its own direction.
-  const puffs = [
-    { img: 1, dx: -1.0, dy: -0.35, size: 0.9 },
-    { img: 2, dx: 1.0, dy: -0.25, size: 1.0 },
-    { img: 3, dx: -0.8, dy: 0.55, size: 1.1 },
-    { img: 4, dx: 0.85, dy: 0.6, size: 1.0 },
-    { img: 2, dx: 0.05, dy: -0.9, size: 0.8 },
-    { img: 1, dx: -0.1, dy: 0.95, size: 1.2 },
-    { img: 4, dx: -0.45, dy: 0.05, size: 0.7 },
-    { img: 3, dx: 0.5, dy: -0.05, size: 0.75 }
-  ].map(p => {
-    const el = document.createElement("img");
-    el.src = `./img/clouds/cloud-${p.img}.webp`;
-    el.alt = "";
-    el.decoding = "async";
-    el.className = "cloud-puff";
-    layer.appendChild(el);
-    return { ...p, el };
-  });
-  document.body.appendChild(layer);
+  const stages = [
+    { section: ".hero1", targets: [".hero1"], enter: false },
+    { section: "#vision-reveal", targets: [".vision-container"] },
+    { section: "#roadmap-section", targets: ["#roadmap-section > .container"] },
+    // Pinned section: zoom away while still pinned, before it scrolls off.
+    { section: ".ascent3d", targets: [".ascent3d-sticky"], exitShift: 1 },
+    // Fixed elements: fade them out before the next (transparent) section reaches them.
+    { section: ".scroll-container-parent", targets: [".scroll-container", ".sticky-heading"], exitShift: 0.4 },
+    { section: ".stats-section", targets: [".stats-section > .container"], exit: false },
+    { section: ".footer", targets: [".footer-content"], exit: false },
+  ].map(s => ({
+    ...s,
+    sectionEl: document.querySelector(s.section),
+    els: s.targets.map(t => document.querySelector(t)).filter(Boolean),
+  })).filter(s => s.sectionEl && s.els.length);
 
-  let active = false;
-  const sizePuffs = () => {
-    const w = `${Math.max(window.innerWidth, window.innerHeight) * 0.55}px`;
-    puffs.forEach(p => { p.el.style.width = w; });
-  };
-  sizePuffs();
+  const ease = t => t * t * (3 - 2 * t);
+  const clamp = v => Math.min(1, Math.max(0, v));
 
   const render = () => {
     const vh = window.innerHeight;
-    const vw = window.innerWidth;
-    const span = vh * 0.4;
-    let t = -1;
-    for (const el of boundaries) {
-      const d = (el.getBoundingClientRect().top - vh / 2) / span;
-      if (d > -1 && d < 1) { t = (1 - d) / 2; break; }
-    }
-
-    if (t < 0) {
-      if (active) { layer.style.visibility = "hidden"; active = false; }
-      return;
-    }
-    if (!active) { layer.style.visibility = "visible"; active = true; }
-
-    const bell = Math.sin(Math.PI * t);
-    veil.style.opacity = (0.9 * Math.pow(bell, 2.4)).toFixed(3);
-    puffs.forEach(p => {
-      const reach = 0.1 + Math.pow(t, 1.6) * 0.95;
-      const x = p.dx * reach * vw * 0.6;
-      const y = p.dy * reach * vh * 0.6;
-      const scale = p.size * (0.35 + Math.pow(t, 1.4) * 2.6);
-      p.el.style.opacity = Math.min(1, Math.pow(bell, 1.1) * 1.15).toFixed(3);
-      p.el.style.transform =
-        `translate(-50%, -50%) translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) scale(${scale.toFixed(3)})`;
+    stages.forEach(stage => {
+      const r = stage.sectionEl.getBoundingClientRect();
+      if (r.bottom < -vh || r.top > vh * 2) return;
+      // enter: section top travels from the bottom of the screen to 40% height
+      const tIn = stage.enter === false ? 1 : ease(clamp((vh - r.top) / (vh * 0.6)));
+      // exit: section bottom travels from 60% height to the top of the screen
+      // (shifted down by exitShift screens for pinned sections)
+      const shift = vh * (stage.exitShift || 0);
+      const tOut = stage.exit === false ? 0 : ease(clamp((vh * 0.6 + shift - r.bottom) / (vh * 0.6)));
+      const scale = (1 + depth * (1 - tIn)) * (1 - depth * tOut);
+      const fade = Math.min(tIn, 1 - tOut);
+      stage.els.forEach(el => {
+        const er = el.getBoundingClientRect();
+        el.style.transformOrigin = `50% ${(vh / 2 - er.top).toFixed(0)}px`;
+        el.style.scale = scale.toFixed(4);
+        el.style.filter = fade < 0.999 ? `opacity(${fade.toFixed(3)})` : "";
+      });
     });
   };
 
   const onScroll = rafThrottle(render);
   window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", () => { sizePuffs(); onScroll(); });
+  window.addEventListener("resize", onScroll);
   render();
 };
 
@@ -667,7 +662,8 @@ document.addEventListener("DOMContentLoaded", () => {
   setupContactModal();
   setupPillarsCarousel();
   setupLoader();
-  setupCloudTransitions();
+  setupSmoothScroll();
+  setupSectionDepth();
 
   const yearEl = document.getElementById('footer-year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
