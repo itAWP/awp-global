@@ -5061,3 +5061,117 @@ body,
   will-change: transform, opacity;
   user-select: none;
 }
+
+/* ==================== SERVICES CARDS — PILLAR CONTENT ==================== */
+.roadmap-section .roadmap-heading {
+  font-size: clamp(26px, 2.3vw, 34px);
+  line-height: 1.25;
+  color: #13294b;
+}
+
+.roadmap-section .roadmap-eyebrow {
+  font-family: "Jost", "Futura", "Trebuchet MS", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #8a6a32;
+}
+
+.roadmap-credential {
+  font-family: "Jost", "Futura", "Trebuchet MS", sans-serif;
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  color: #13294b;
+  padding-left: 14px;
+  border-left: 2px solid #b8975a;
+  max-width: 300px;
+}
+
+.roadmap-disclaimer {
+  font-family: "Jost", "Futura", "Trebuchet MS", sans-serif;
+  font-size: 0.74rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: #7a8899;
+  max-width: 300px;
+}
+
+.roadmap-section .glass-card {
+  justify-content: flex-start;
+  padding: 2.4rem 2.2rem 2.2rem;
+}
+
+.card-numeral {
+  font-family: "Cinzel", "Trajan Pro", Georgia, serif;
+  font-size: 2.1rem;
+  line-height: 1;
+  color: #f1dfb4;
+  margin-bottom: 0.9rem;
+  text-shadow: 0 2px 10px rgba(19, 41, 75, 0.25);
+}
+
+.roadmap-section .process-card-title {
+  margin-bottom: 0.8rem;
+  text-shadow: 0 2px 12px rgba(19, 41, 75, 0.2);
+}
+
+.card-lead {
+  font-family: "Jost", "Futura", "Trebuchet MS", sans-serif;
+  font-size: 0.98rem;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.92);
+  margin-bottom: 1.3rem;
+  max-width: 320px;
+}
+
+.card-services {
+  list-style: none;
+  width: 100%;
+  margin: 0 0 1.3rem;
+  padding: 0;
+}
+
+.card-services li {
+  padding: 0.75rem 0.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.card-services li:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.card-services strong {
+  display: block;
+  font-family: "Jost", "Futura", "Trebuchet MS", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin-bottom: 0.2rem;
+}
+
+.card-services span {
+  display: block;
+  font-family: "Jost", "Futura", "Trebuchet MS", sans-serif;
+  font-size: 0.86rem;
+  font-weight: 300;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.card-for {
+  margin-top: auto;
+  font-family: "Jost", "Futura", "Trebuchet MS", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f1dfb4;
+}
