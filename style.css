@@ -5031,6 +5031,10 @@ body,
   color: #b8975a;
 }
 
+.roadmap-steps .step {
+  cursor: pointer;
+}
+
 /* ==================== CLOUD FLY-THROUGH ==================== */
 .cloud-transition {
   position: fixed;

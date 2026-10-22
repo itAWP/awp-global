@@ -197,7 +197,8 @@ const setupRoadmapStepHover = () => {
         behavior: "smooth"
       });
     };
-    step.addEventListener("mouseenter", activate);
+    // Hover only highlights; scrolling the page on hover was jarring.
+    step.addEventListener("mouseenter", () => setActiveStep(index));
     step.addEventListener("click", (e) => { e.preventDefault(); activate(); });
   });
 
