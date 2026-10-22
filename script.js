@@ -477,13 +477,17 @@ const setupContactModal = () => {
       e.preventDefault();
       const submitBtn = contactForm.querySelector('.submit-btn');
       const originalText = submitBtn.innerText;
-      const formData = new FormData(contactForm);
+      const payload = Object.fromEntries(new FormData(contactForm));
 
       submitBtn.innerText = "Sending...";
       submitBtn.disabled = true;
 
-      fetch('send_email.php', { method: 'POST', body: formData })
-        .then(r => r.json())
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+        .then(r => r.json().catch(() => ({})))
         .then(data => {
           if (data.status === 'success') {
             submitBtn.innerText = "Message Sent!";
@@ -499,10 +503,10 @@ const setupContactModal = () => {
             }, 1500);
           } else throw new Error(data.message || 'Submission failed');
         })
-        .catch(() => {
+        .catch((err) => {
           submitBtn.innerText = "Error!";
           submitBtn.style.background = "#ff4444";
-          alert("There was an error sending your message. Please try again later.");
+          alert(err.message || "There was an error sending your message. Please try again later.");
           setTimeout(() => {
             submitBtn.innerText = originalText;
             submitBtn.style.background = "#051C2C";
