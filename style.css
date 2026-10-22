@@ -4938,3 +4938,95 @@ body {
     transform: translateY(-1px);
   }
 }
+
+/* Tighter luxury nav on narrow desktops so it stays on one row */
+@media (min-width: 993px) and (max-width: 1240px) {
+  .navbar .nav-link {
+    padding: 10px 10px;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+  }
+
+  .navbar .cta-button {
+    padding: 10px 16px;
+    margin-left: 8px;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+  }
+
+  .navbar .logo {
+    width: 130px;
+  }
+}
+
+/* ==================== PREMIUM TYPOGRAPHY & ICONS ==================== */
+body,
+.start__text,
+.final__bottom-text,
+.vision-text,
+.vision-text2,
+.our-process-section,
+.panel h3,
+.panel p,
+.process-card-description,
+.section-subtitle {
+  font-family: "Jost", "Futura", "Trebuchet MS", sans-serif;
+}
+
+.section-title,
+.sticky-heading,
+.panel h2,
+.process-card-title,
+.stat-number {
+  font-family: "Cinzel", "Trajan Pro", Georgia, serif;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.process-card-title {
+  font-size: 26px;
+  line-height: 1.3;
+}
+
+.panel h3 {
+  font-weight: 300;
+}
+
+.stat-label {
+  font-family: "Jost", "Futura", "Trebuchet MS", sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.tl-card .accordion-button {
+  font-family: "Cinzel", "Trajan Pro", Georgia, serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.tl-step-no {
+  font-family: "Cinzel", "Trajan Pro", Georgia, serif;
+  font-weight: 600;
+  color: #b8975a;
+  margin-right: 12px;
+  padding-right: 12px;
+  border-right: 1px solid rgba(184, 151, 90, 0.5);
+  line-height: 1;
+}
+
+.accordion-button:not(.collapsed) .tl-step-no {
+  color: #f1dfb4;
+  border-right-color: rgba(241, 223, 180, 0.5);
+}
+
+.step-svg {
+  width: 22px;
+  height: 22px;
+}
+
+.step.active,
+.step:hover {
+  color: #b8975a;
+}

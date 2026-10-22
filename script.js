@@ -574,4 +574,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupContactModal();
   setupPillarsCarousel();
   setupLoader();
+
+  const yearEl = document.getElementById('footer-year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 });
