@@ -560,6 +560,91 @@ const setupLoader = () => {
   }
 };
 
+// ==================== CLOUD FLY-THROUGH BETWEEN SECTIONS ====================
+// Scroll-linked: as a section boundary crosses the middle of the screen,
+// cloud puffs grow out of the distance, cover the view, and stream past the
+// edges, so moving to the next section feels like flying through a cloud.
+const setupCloudTransitions = () => {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  // The hero already ends in a cloud bank, so the first fly-through is
+  // into Services rather than the short About text right after the hero.
+  const boundaries = [
+    "#roadmap-section", "#tl-container",
+    ".scroll-container-parent", ".stats-section"
+  ].map(sel => document.querySelector(sel)).filter(Boolean);
+  if (!boundaries.length) return;
+
+  const layer = document.createElement("div");
+  layer.className = "cloud-transition";
+  layer.setAttribute("aria-hidden", "true");
+  const veil = document.createElement("div");
+  veil.className = "cloud-transition-veil";
+  layer.appendChild(veil);
+
+  // Each puff flies out from near the centre along its own direction.
+  const puffs = [
+    { img: 1, dx: -1.0, dy: -0.35, size: 0.9 },
+    { img: 2, dx: 1.0, dy: -0.25, size: 1.0 },
+    { img: 3, dx: -0.8, dy: 0.55, size: 1.1 },
+    { img: 4, dx: 0.85, dy: 0.6, size: 1.0 },
+    { img: 2, dx: 0.05, dy: -0.9, size: 0.8 },
+    { img: 1, dx: -0.1, dy: 0.95, size: 1.2 },
+    { img: 4, dx: -0.45, dy: 0.05, size: 0.7 },
+    { img: 3, dx: 0.5, dy: -0.05, size: 0.75 }
+  ].map(p => {
+    const el = document.createElement("img");
+    el.src = `./img/clouds/cloud-${p.img}.webp`;
+    el.alt = "";
+    el.decoding = "async";
+    el.className = "cloud-puff";
+    layer.appendChild(el);
+    return { ...p, el };
+  });
+  document.body.appendChild(layer);
+
+  let active = false;
+  const sizePuffs = () => {
+    const w = `${Math.max(window.innerWidth, window.innerHeight) * 0.55}px`;
+    puffs.forEach(p => { p.el.style.width = w; });
+  };
+  sizePuffs();
+
+  const render = () => {
+    const vh = window.innerHeight;
+    const vw = window.innerWidth;
+    const span = vh * 0.4;
+    let t = -1;
+    for (const el of boundaries) {
+      const d = (el.getBoundingClientRect().top - vh / 2) / span;
+      if (d > -1 && d < 1) { t = (1 - d) / 2; break; }
+    }
+
+    if (t < 0) {
+      if (active) { layer.style.visibility = "hidden"; active = false; }
+      return;
+    }
+    if (!active) { layer.style.visibility = "visible"; active = true; }
+
+    const bell = Math.sin(Math.PI * t);
+    veil.style.opacity = (0.9 * Math.pow(bell, 2.4)).toFixed(3);
+    puffs.forEach(p => {
+      const reach = 0.1 + Math.pow(t, 1.6) * 0.95;
+      const x = p.dx * reach * vw * 0.6;
+      const y = p.dy * reach * vh * 0.6;
+      const scale = p.size * (0.35 + Math.pow(t, 1.4) * 2.6);
+      p.el.style.opacity = Math.min(1, Math.pow(bell, 1.1) * 1.15).toFixed(3);
+      p.el.style.transform =
+        `translate(-50%, -50%) translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) scale(${scale.toFixed(3)})`;
+    });
+  };
+
+  const onScroll = rafThrottle(render);
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", () => { sizePuffs(); onScroll(); });
+  render();
+};
+
 // ==================== SINGLE DOMContentLoaded ====================
 document.addEventListener("DOMContentLoaded", () => {
   document.documentElement.style.scrollBehavior = "smooth";
@@ -574,6 +659,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupContactModal();
   setupPillarsCarousel();
   setupLoader();
+  setupCloudTransitions();
 
   const yearEl = document.getElementById('footer-year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
