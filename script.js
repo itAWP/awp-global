@@ -609,7 +609,7 @@ const setupSectionDepth = () => {
     { section: ".ascent3d", targets: [".ascent3d-sticky"], exitShift: 1 },
     { section: ".globe3d", targets: [".globe3d-sticky"], exitShift: 1 },
     { section: ".stats-section", targets: [".stats-section > .container"], exit: false },
-    { section: ".footer", targets: [".footer-content"], exit: false },
+    { section: ".site-footer", targets: [".sf-inner"], exit: false },
   ].map(s => ({
     ...s,
     sectionEl: document.querySelector(s.section),

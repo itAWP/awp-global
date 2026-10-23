@@ -5547,3 +5547,77 @@ body {
   .globe3d-statement { position: relative; opacity: 1; padding: 120px 20px 0; left: auto; right: auto; }
   .globe3d-city.is-current .globe3d-city-dot { animation: none; }
 }
+
+/* ==================== SITE FOOTER ==================== */
+.site-footer {
+  position: relative; margin-top: 120px; color: #dfe7f0;
+  background: linear-gradient(180deg, #13294b 0%, #0b1a31 100%);
+  font-family: "Jost", sans-serif; text-align: left;
+}
+.site-footer::before {
+  /* thin gold hairline along the top edge */
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(224, 196, 138, .7) 50%, transparent);
+}
+.sf-inner { max-width: 1200px; margin: 0 auto; padding: 84px clamp(20px, 5vw, 56px) 34px; }
+.sf-top { display: grid; grid-template-columns: 1.6fr 1fr 0.8fr 1fr; gap: 48px; }
+
+.sf-logo { display: inline-flex; align-items: center; gap: 14px; text-decoration: none; }
+.sf-mark { width: 44px; height: 44px; border-radius: 50%; background: #eef3f8 url('./img/altius-mark.png') center / cover; box-shadow: 0 0 0 1px rgba(224, 196, 138, .45); animation: logo-pulse 2s ease-in-out infinite; } /* navy mark needs a light disc on the navy footer */
+.sf-logo img { height: 34px; width: auto; filter: brightness(0) invert(1); }
+.sf-tagline { margin: 26px 0 0; max-width: 380px; font-size: .98rem; font-weight: 300; line-height: 1.75; color: rgba(223, 231, 240, .78); }
+.site-footer .sf-cta { color: #fff; border-bottom-color: rgba(255, 255, 255, .4); margin-top: 30px; }
+.site-footer .sf-cta .a3d-cta-icon { background: #b8975a; }
+.site-footer .sf-cta:hover { color: #fff; }
+.site-footer .sf-cta:hover .a3d-cta-icon { background: #fff; color: #13294b; }
+
+.sf-heading {
+  margin: 6px 0 24px; font-family: "Jost", sans-serif; font-size: .72rem; font-weight: 500;
+  letter-spacing: .24em; text-transform: uppercase; color: #e0c48a;
+}
+.sf-offices, .sf-links { list-style: none; margin: 0; padding: 0; }
+.sf-offices li { display: flex; flex-direction: column; gap: 3px; padding: 0 0 16px; margin-bottom: 16px; border-bottom: 1px solid rgba(255, 255, 255, .08); }
+.sf-offices li:last-child { border-bottom: 0; margin-bottom: 0; }
+.sf-offices strong { font-family: "Cinzel", serif; font-weight: 500; font-size: 1.02rem; letter-spacing: .08em; color: #fff; }
+.sf-offices span { font-size: .82rem; font-weight: 300; color: rgba(223, 231, 240, .62); }
+.sf-links li + li { margin-top: 13px; }
+.sf-links a, .sf-email {
+  color: rgba(223, 231, 240, .82); text-decoration: none; font-size: .95rem; font-weight: 300;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .35s ease, color .3s ease;
+}
+.sf-links a:hover, .sf-email:hover { color: #fff; background-size: 100% 1px; }
+.sf-email { font-size: 1.02rem; color: #fff; }
+
+.sf-social { display: flex; gap: 12px; margin-top: 26px; }
+.sf-social-link {
+  width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .22); color: #fff; transition: background .3s ease, border-color .3s ease, color .3s ease;
+}
+.sf-social-link:hover { background: #b8975a; border-color: #b8975a; color: #fff; }
+.sf-social-icon { width: 16px; height: 16px; fill: currentColor; }
+
+.sf-legal { margin-top: 64px; padding-top: 28px; border-top: 1px solid rgba(255, 255, 255, .1); display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.sf-legal p { margin: 0; font-size: .76rem; font-weight: 300; line-height: 1.7; color: rgba(223, 231, 240, .5); }
+
+.sf-bottom {
+  margin-top: 28px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+  font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(223, 231, 240, .55);
+}
+.sf-top-link { color: rgba(223, 231, 240, .75); text-decoration: none; transition: color .3s ease; }
+.sf-top-link:hover { color: #e0c48a; }
+
+@media (max-width: 1024px) {
+  .sf-top { grid-template-columns: 1fr 1fr; }
+  .sf-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) {
+  .site-footer { margin-top: 80px; }
+  .sf-inner { padding: 60px 22px 28px; }
+  .sf-top { grid-template-columns: 1fr 1fr; gap: 40px 24px; }
+  .sf-col:last-child { grid-column: 1 / -1; }
+  .sf-legal { grid-template-columns: 1fr; margin-top: 44px; gap: 14px; }
+  .sf-bottom { flex-direction: column; align-items: flex-start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sf-mark { animation: none; }
+}

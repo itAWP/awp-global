@@ -104,7 +104,7 @@ window.addEventListener("resize", resize);
 resize();
 
 // Section boundaries that thicken the clouds as they cross mid-screen.
-const boundaries = ["#vision-reveal", "#roadmap-section", "#tl-container", "#global-connectivity", ".stats-section", ".footer"]
+const boundaries = ["#vision-reveal", "#roadmap-section", "#tl-container", "#global-connectivity", ".stats-section", ".site-footer"]
   .map(sel => document.querySelector(sel)).filter(Boolean);
 const hero = document.querySelector(".hero1");
 
