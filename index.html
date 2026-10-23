@@ -26,10 +26,10 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.css">
-	<link rel="stylesheet" href="./style.css?v=20261023a">
+	<link rel="stylesheet" href="./style.css?v=20261023c">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script><link rel="stylesheet" href="./style.css?v=20261023a">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script><link rel="stylesheet" href="./style.css?v=20261023c">
 
   <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js" crossorigin="anonymous"></script>
   <script type="importmap">
@@ -428,6 +428,38 @@
   </div>
 </section>
 
+<section class="globe3d" id="global-connectivity" aria-labelledby="globe3d-title">
+  <div class="globe3d-sticky">
+    <canvas class="globe3d-canvas" aria-hidden="true"></canvas>
+    <div class="globe3d-labels" aria-hidden="true">
+      <span class="globe3d-city" data-hub="0"><span class="globe3d-city-dot"></span>Jakarta</span>
+      <span class="globe3d-city" data-hub="1"><span class="globe3d-city-dot"></span>Mauritius</span>
+      <span class="globe3d-city" data-hub="2"><span class="globe3d-city-dot"></span>Dubai</span>
+    </div>
+    <h2 class="globe3d-statement" id="globe3d-title">Established across three financial hubs &mdash; Jakarta, Mauritius and Dubai &mdash; we connect clients with capital, counterparties and opportunities across Asia, Africa and the Middle East.</h2>
+    <div class="ascent3d-panel globe3d-panel a3d-group is-hidden">
+      <div class="a3d-mark" aria-hidden="true">
+        <span class="a3d-diamond"><span class="a3d-mark-no">01</span></span>
+        <span class="a3d-ring"></span>
+      </div>
+      <p class="a3d-title">Global Connectivity <span>— Our Presence</span></p>
+      <ol class="a3d-steps">
+        <li class="a3d-step is-active"><span class="a3d-step-no">01</span><h3>Jakarta</h3><p>Close to our clients in Southeast Asia&rsquo;s largest economy &mdash; families, founders, and corporates navigating growth, transactions, and succession.</p></li>
+        <li class="a3d-step"><span class="a3d-step-no">02</span><h3>Mauritius</h3><p>Home to our FSC-licensed investment advisory platform, in an established international financial centre that bridges Asia, Africa, and Europe.</p></li>
+        <li class="a3d-step"><span class="a3d-step-no">03</span><h3>Dubai</h3><p>A gateway to Gulf capital and Middle East investors, linking regional liquidity with opportunities in Asia and Africa.</p></li>
+        <li class="a3d-step"><span class="a3d-step-no">04</span><h3>Seamless Across Borders</h3><p>One team across three hubs &mdash; coordinated advice, structuring, and execution wherever your wealth and business take you.</p></li>
+      </ol>
+    </div>
+    <nav class="a3d-nav globe3d-nav" aria-label="Global connectivity">
+      <button type="button" class="a3d-nav-item is-active" data-step="0"><span class="a3d-nav-dot"></span><span class="a3d-nav-label">Overview</span></button>
+      <button type="button" class="a3d-nav-item" data-step="1"><span class="a3d-nav-dot"></span><span class="a3d-nav-label">Jakarta</span></button>
+      <button type="button" class="a3d-nav-item" data-step="2"><span class="a3d-nav-dot"></span><span class="a3d-nav-label">Mauritius</span></button>
+      <button type="button" class="a3d-nav-item" data-step="3"><span class="a3d-nav-dot"></span><span class="a3d-nav-label">Dubai</span></button>
+      <button type="button" class="a3d-nav-item" data-step="4"><span class="a3d-nav-dot"></span><span class="a3d-nav-label">Network</span></button>
+    </nav>
+  </div>
+</section>
+
 
 
 <!--<section id="clarity-section" class="clarity-section">
@@ -566,9 +598,10 @@
     <script src='https://unpkg.com/gsap@3/dist/gsap.min.js' crossorigin="anonymous"></script>
     <script src='https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js' crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-    <script src="./script.js?v=20261023a"></script>
-    <script type="module" src="./ascent3d.js?v=20261023a"></script>
-    <script type="module" src="./sky.js?v=20261023a"></script>
+    <script src="./script.js?v=20261023c"></script>
+    <script type="module" src="./ascent3d.js?v=20261023c"></script>
+    <script type="module" src="./globe3d.js?v=20261023c"></script>
+    <script type="module" src="./sky.js?v=20261023c"></script>
 
 
   <!-- Contact Modal -->

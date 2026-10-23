@@ -607,6 +607,7 @@ const setupSectionDepth = () => {
     { section: "#roadmap-section", targets: ["#roadmap-section > .container"] },
     // Pinned section: zoom away while still pinned, before it scrolls off.
     { section: ".ascent3d", targets: [".ascent3d-sticky"], exitShift: 1 },
+    { section: ".globe3d", targets: [".globe3d-sticky"], exitShift: 1 },
     { section: ".stats-section", targets: [".stats-section > .container"], exit: false },
     { section: ".footer", targets: [".footer-content"], exit: false },
   ].map(s => ({
