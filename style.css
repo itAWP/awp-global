@@ -5621,3 +5621,32 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .sf-mark { animation: none; }
 }
+
+/* ==================== NAV LOCKUP — balanced mark + wordmark ==================== */
+/* The mark sits in a light disc as tall as the wordmark, so the two read as one
+   lockup instead of a small badge beside heavy type. */
+.navbar .navbar-brand { gap: 14px; }
+.navbar .logo-icon {
+  width: 46px; height: 46px; flex-shrink: 0;
+  background: #f5f8fb; box-shadow: 0 0 0 1px rgba(184, 151, 90, .35), 0 4px 12px rgba(19, 41, 75, .12);
+}
+.navbar .logo-icon::before { width: 46px; height: 46px; background-size: 92%; background-position: center; background-repeat: no-repeat; animation-name: logo-breathe; }
+.navbar .logo { width: 140px; }
+/* the blink stays, but the mark no longer swells past its disc */
+@keyframes logo-breathe {
+  0%, 100% { transform: scale(1); opacity: .78; }
+  50% { transform: scale(1.04); opacity: 1; }
+}
+
+@media (max-width: 1024px) {
+  .navbar .navbar-brand { gap: 10px; }
+  .navbar .logo-icon, .navbar .logo-icon::before { width: 38px; height: 38px; }
+  .navbar .logo { width: 116px; }
+}
+@media (max-width: 480px) {
+  .navbar .logo-icon, .navbar .logo-icon::before { width: 34px; height: 34px; }
+  .navbar .logo { width: 104px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .navbar .logo-icon::before { animation: none; opacity: 1; }
+}
