@@ -21,9 +21,9 @@ const debounce = (fn, ms) => {
 };
 
 // ==================== COUNTER ANIMATION ====================
-const createCounterAnimation = (element, target) => {
-  let current = 0;
-  const increment = target / 60;
+const createCounterAnimation = (element, target, from = 0) => {
+  let current = from;
+  const increment = (target - from) / 60;
   const animate = () => {
     current += increment;
     if (current >= target) {
@@ -49,7 +49,7 @@ const createScrollSlideAnimator = () => {
         if (entry.target.classList.contains("stat-item")) {
           const numberEl = entry.target.querySelector(".stat-number");
           const target = parseInt(numberEl.dataset.target);
-          createCounterAnimation(numberEl, target);
+          createCounterAnimation(numberEl, target, parseInt(numberEl.dataset.from || 0));
         }
       }
     });
@@ -71,7 +71,7 @@ const createScrollSlideAnimator = () => {
     const target = parseInt(numberEl.dataset.target);
     item.addEventListener("mouseenter", () => {
       if (!item.classList.contains("animate")) {
-        createCounterAnimation(numberEl, target);
+        createCounterAnimation(numberEl, target, parseInt(numberEl.dataset.from || 0));
       }
     });
   });
