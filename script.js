@@ -433,11 +433,16 @@ const setupMobileNav = () => {
   }, 200));
 
   // Smooth scrolling for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  document.querySelectorAll('a[href^="#"]:not([data-audience-open])').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       e.preventDefault();
       const target = document.querySelector(this.getAttribute('href'));
-      if (target) scrollToTarget(target);
+      if (!target) return;
+      // a sticky card's on-screen box moves while pinned; aim for the point where it starts to stick
+      const pinned = stickyScrollY(target);
+      if (pinned !== null) return scrollToTarget(pinned);
+      // data-scroll-offset (fraction of the viewport) keeps the target clear of the floating nav
+      scrollToTarget(target, -window.innerHeight * (parseFloat(this.dataset.scrollOffset) || 0));
     });
   });
 
@@ -582,6 +587,21 @@ const setupSmoothScroll = () => {
   }
 };
 
+// Scroll position at which a position:sticky element reaches its stuck spot, or null if not sticky.
+// Works from the parent's layout (flex column, no gap) since the element's own box moves while pinned.
+const stickyScrollY = (el) => {
+  const cs = getComputedStyle(el);
+  if (cs.position !== "sticky") return null;
+  const parent = el.parentElement;
+  let y = parent.getBoundingClientRect().top + window.scrollY + parseFloat(getComputedStyle(parent).paddingTop);
+  for (const sib of parent.children) {
+    if (sib === el) break;
+    const s = getComputedStyle(sib);
+    y += sib.offsetHeight + parseFloat(s.marginTop) + parseFloat(s.marginBottom);
+  }
+  return y + parseFloat(cs.marginTop) - parseFloat(cs.top);
+};
+
 const scrollToTarget = (target, offset = 0) => {
   if (window.lenis) window.lenis.scrollTo(target, { offset });
   else {
@@ -603,11 +623,14 @@ const setupSectionDepth = () => {
 
   const stages = [
     { section: ".hero1", targets: [".hero1"], enter: false },
+    { section: ".paths", targets: [".paths-inner"] },
     { section: "#vision-reveal", targets: [".vision-container"] },
     { section: "#roadmap-section", targets: ["#roadmap-section > .container"] },
     // Pinned section: zoom away while still pinned, before it scrolls off.
     { section: ".ascent3d", targets: [".ascent3d-sticky"], exitShift: 1 },
     { section: ".globe3d", targets: [".globe3d-sticky"], exitShift: 1 },
+    { section: ".leaders", targets: [".leaders-inner"] },
+    { section: ".mandates-teaser", targets: [".mandates-teaser-inner"] },
     { section: ".stats-section", targets: [".stats-section > .container"], exit: false },
     { section: ".site-footer", targets: [".sf-inner"], exit: false },
   ].map(s => ({
@@ -647,6 +670,127 @@ const setupSectionDepth = () => {
   render();
 };
 
+// ==================== SELECTED MANDATES ====================
+const setupMandates = () => {
+  const section = document.querySelector(".mandates");
+  if (!section) return;
+  const cards = [...section.querySelectorAll(".mandate")];
+  const teamCards = [...section.querySelectorAll(".mandates-grid--team .mandate")];
+  const chips = [...section.querySelectorAll(".mandates-chip")];
+
+  // reveal the tombstones in a short stagger as they come into view
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const visible = cards.filter(c => !c.hidden);
+      entry.target.style.transitionDelay = `${Math.max(0, visible.indexOf(entry.target)) % 3 * 0.08}s`;
+      entry.target.classList.add("is-in");
+      // drop the stagger once revealed so hover responds immediately
+      setTimeout(() => { entry.target.style.transitionDelay = ""; }, 900);
+      io.unobserve(entry.target);
+    });
+  }, { threshold: 0.15 });
+  cards.forEach(c => io.observe(c));
+
+  chips.forEach(chip => chip.addEventListener("click", () => {
+    const f = chip.dataset.filter;
+    chips.forEach(c => {
+      const on = c === chip;
+      c.classList.toggle("is-active", on);
+      c.setAttribute("aria-pressed", String(on));
+    });
+    teamCards.forEach(card => {
+      card.hidden = f !== "all" && card.dataset.pillar !== f;
+      card.style.transitionDelay = "";
+      card.classList.add("is-in");
+    });
+  }));
+};
+
+// ==================== AUDIENCE PANELS (SIDE-SLIDING PAGES) ====================
+// The two paths under the hero open a full-screen page that slides in from the
+// right, mont-fort style. Back (button, Esc or browser back) slides it away;
+// the switch link slides sideways to the other audience. Deep-linkable by hash.
+const setupAudiencePanels = () => {
+  const panels = [...document.querySelectorAll(".audience")];
+  const veil = document.querySelector(".audience-veil");
+  if (!panels.length || !veil) return;
+  const DURATION = 850;
+  let current = null, opener = null;
+
+  const lock = (on) => {
+    document.documentElement.classList.toggle("audience-lock", on);
+    if (window.lenis) on ? window.lenis.stop() : window.lenis.start();
+  };
+
+  const show = (panel, anchor) => {
+    panel.hidden = false;
+    panel.scrollTop = 0;
+    // optionally glide on to a spot inside the page once it has slid in
+    const spot = anchor && document.getElementById(anchor);
+    if (spot) setTimeout(() => panel.scrollTo({ top: spot.offsetTop - 90, behavior: "smooth" }), DURATION);
+    requestAnimationFrame(() => requestAnimationFrame(() => panel.classList.add("is-open")));
+    setTimeout(() => panel.querySelector(".audience-title").focus({ preventScroll: true }), DURATION * 0.6);
+  };
+
+  const open = (id, { push = true, anchor = null } = {}) => {
+    const panel = document.getElementById(id);
+    if (!panel || panel === current) return;
+    if (current) {
+      // sideways: the old page drifts left while the new one slides over it
+      const old = current;
+      old.classList.add("is-left");
+      old.classList.remove("is-open");
+      setTimeout(() => { old.hidden = true; old.classList.remove("is-left"); }, DURATION);
+    } else {
+      opener = document.activeElement;
+      veil.hidden = false;
+      requestAnimationFrame(() => veil.classList.add("is-on"));
+      lock(true);
+    }
+    current = panel;
+    show(panel, anchor);
+    if (push) history.pushState({ audience: id }, "", "#" + id);
+  };
+
+  const close = ({ push = true } = {}) => {
+    if (!current) return;
+    const panel = current;
+    current = null;
+    panel.classList.remove("is-open");
+    veil.classList.remove("is-on");
+    setTimeout(() => { panel.hidden = true; veil.hidden = true; }, DURATION);
+    lock(false);
+    if (push) history.pushState(null, "", location.pathname + location.search);
+    if (opener && opener.focus) opener.focus({ preventScroll: true });
+  };
+
+  document.querySelectorAll("[data-audience-open]").forEach(el => el.addEventListener("click", (e) => {
+    e.preventDefault();
+    open(el.dataset.audienceOpen, { anchor: el.dataset.audienceAnchor });
+  }));
+  document.querySelectorAll("[data-audience-close]").forEach(el => el.addEventListener("click", () => close()));
+  veil.addEventListener("click", () => close());
+
+  // jump from a panel to a section of the main page
+  document.querySelectorAll("[data-audience-goto]").forEach(el => el.addEventListener("click", () => {
+    const target = document.querySelector(el.dataset.audienceGoto);
+    close();
+    if (target) setTimeout(() => scrollToTarget(target), DURATION * 0.5);
+  }));
+  // the consultation CTA inside a panel opens the contact modal over the page
+  panels.forEach(p => p.querySelectorAll(".a3d-cta").forEach(cta => cta.addEventListener("click", () => close({ push: true }))));
+
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && current) close(); });
+  window.addEventListener("popstate", () => {
+    const id = (location.hash || "").slice(1);
+    if (id && document.getElementById(id)?.classList.contains("audience")) open(id, { push: false });
+    else close({ push: false });
+  });
+  const initial = (location.hash || "").slice(1);
+  if (initial && document.getElementById(initial)?.classList.contains("audience")) open(initial, { push: false });
+};
+
 // ==================== SINGLE DOMContentLoaded ====================
 document.addEventListener("DOMContentLoaded", () => {
   document.documentElement.style.scrollBehavior = "smooth";
@@ -662,6 +806,8 @@ document.addEventListener("DOMContentLoaded", () => {
   setupPillarsCarousel();
   setupLoader();
   setupSmoothScroll();
+  setupMandates();
+  setupAudiencePanels();
   setupSectionDepth();
 
   const yearEl = document.getElementById('footer-year');

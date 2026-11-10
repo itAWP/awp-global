@@ -26,10 +26,10 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.css">
-	<link rel="stylesheet" href="./style.css?v=20261023e">
+	<link rel="stylesheet" href="./style.css?v=20261110f">
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script><link rel="stylesheet" href="./style.css?v=20261023e">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script><link rel="stylesheet" href="./style.css?v=20261110f">
 
   <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js" crossorigin="anonymous"></script>
   <script type="importmap">
@@ -276,6 +276,202 @@
         </div>
     </section>
 
+<!-- TWO PATHS — one entry for private clients, one for companies -->
+<section class="paths" id="paths" aria-label="Choose your path">
+  <div class="paths-inner">
+    <a class="path" href="#for-families" data-audience-open="for-families">
+      <span class="path-for">For families &amp; individuals</span>
+      <span class="path-title">Preserve and grow your wealth</span>
+      <span class="path-list">Private wealth &middot; Investment advisory &middot; Succession</span>
+      <span class="path-go">Explore <span aria-hidden="true">&rarr;</span></span>
+    </a>
+    <a class="path" href="#for-companies" data-audience-open="for-companies">
+      <span class="path-for">For companies &amp; founders</span>
+      <span class="path-title">Raise capital, list and transact</span>
+      <span class="path-list">IPO &middot; Bonds &amp; sukuk &middot; Rights issues &middot; M&amp;A</span>
+      <span class="path-go">Explore <span aria-hidden="true">&rarr;</span></span>
+    </a>
+  </div>
+</section>
+
+<!-- AUDIENCE PANELS — slide in from the side, one "page" per audience (opened from the two paths) -->
+<div class="audience-veil" hidden></div>
+<section class="audience" id="for-families" role="dialog" aria-modal="true" aria-labelledby="for-families-title" hidden data-lenis-prevent>
+  <div class="audience-bar">
+    <button type="button" class="audience-back" data-audience-close><span aria-hidden="true">&larr;</span> Back</button>
+    <span class="audience-crumb">For families &amp; individuals</span>
+  </div>
+  <header class="audience-hero">
+    <p class="audience-eyebrow">For families &amp; individuals</p>
+    <h2 class="audience-title" id="for-families-title" tabindex="-1">Preserve and grow your wealth</h2>
+    <p class="audience-lede">Discreet, independent advice for individuals, families and family offices &mdash; across generations and jurisdictions.</p>
+  </header>
+  <div class="audience-body">
+    <h3 class="audience-h">How we help</h3>
+    <ul class="audience-cards">
+      <li><strong>Private Wealth</strong><span>Goals-based planning and portfolio construction.</span></li>
+      <li><strong>Investment Advisory</strong><span>Research-driven recommendations across asset classes.</span></li>
+      <li><strong>Asset Management</strong><span>Through our FSC-licensed platform.</span></li>
+      <li><strong>Structuring &amp; Succession</strong><span>Holding structures, cross-border tax and legacy.</span></li>
+    </ul>
+    <h3 class="audience-h">Why Altius</h3>
+    <ul class="audience-why">
+      <li><strong>Swiss private banking heritage</strong><span>Senior bankers whose backgrounds include Julius Baer, Credit Suisse and Union Bancaire Priv&eacute;e.</span></li>
+      <li><strong>Licensed and regulated</strong><span>Licensed Investment Adviser with the Financial Services Commission, Mauritius.</span></li>
+      <li><strong>Confidential by design</strong><span>Your affairs are handled with complete discretion across Jakarta, Mauritius and Dubai.</span></li>
+    </ul>
+    <div class="audience-end">
+      <a href="#cta" class="a3d-cta audience-cta"><span>Book a private consultation</span><span class="a3d-cta-icon" aria-hidden="true">&rarr;</span></a>
+      <button type="button" class="audience-switch" data-audience-open="for-companies">Advising a company instead? <span aria-hidden="true">&rarr;</span></button>
+    </div>
+  </div>
+</section>
+
+<section class="audience" id="for-companies" role="dialog" aria-modal="true" aria-labelledby="for-companies-title" hidden data-lenis-prevent>
+  <div class="audience-bar">
+    <button type="button" class="audience-back" data-audience-close><span aria-hidden="true">&larr;</span> Back</button>
+    <span class="audience-crumb">For companies &amp; founders</span>
+  </div>
+  <header class="audience-hero">
+    <p class="audience-eyebrow">For companies &amp; founders</p>
+    <h2 class="audience-title" id="for-companies-title" tabindex="-1">Raise capital, list and transact</h2>
+    <p class="audience-lede">From IPO readiness to bond issues and M&amp;A &mdash; senior capital-markets advice for founders, boards and shareholders.</p>
+  </header>
+  <div class="audience-body">
+    <h3 class="audience-h">How we help</h3>
+    <ul class="audience-cards audience-cards--3">
+      <li><strong>IPO Advisory</strong><span>From readiness to listing, roadshow and beyond.</span></li>
+      <li><strong>Debt &amp; Equity Fund Raising</strong><span>Bonds, sukuk, MTNs, private credit and equity.</span></li>
+      <li><strong>Private Placement</strong><span>With institutional and private investors.</span></li>
+      <li><strong>M&amp;A Advisory</strong><span>Buy-side and sell-side, valuation and deal structuring.</span></li>
+      <li><strong>Restructuring</strong><span>Corporate and balance-sheet restructuring.</span></li>
+      <li><strong>Strategic Advisory</strong><span>Retained counsel for shareholders and management.</span></li>
+    </ul>
+    <div class="mandates" id="panel-mandates">
+      <h3 class="audience-h">Selected mandates</h3>
+      <p class="audience-intro">Mandates advised by Altius, alongside transactions our team has executed. Client names are withheld; sectors are generalised and values are shown as broad ranges.</p>
+      <ul class="audience-figures">
+        <li><strong>30+</strong><span>Indonesia IPOs</span></li>
+        <li><strong>90+</strong><span>Bond &amp; sukuk issues</span></li>
+        <li><strong>2004</strong><span>Track record since</span></li>
+      </ul>
+      <h3 class="mandates-group">Altius mandates <span>2025&ndash;2026</span></h3>
+      <ul class="mandates-grid mandates-grid--own">
+        <li class="mandate mandate--own">
+          <span class="mandate-cat">Altius mandate &middot; Indonesia</span>
+          <p class="mandate-value">Capital Raising</p>
+          <h3 class="mandate-type">Paper products manufacturer</h3>
+          <div class="mandate-foot"><span>Financial Adviser</span><span>2025&ndash;2026</span></div>
+        </li>
+        <li class="mandate mandate--own">
+          <span class="mandate-cat">Altius mandate &middot; Indonesia</span>
+          <p class="mandate-value">Capital Raising</p>
+          <h3 class="mandate-type">Consumer packaging manufacturer</h3>
+          <div class="mandate-foot"><span>Financial Adviser</span><span>2025&ndash;2026</span></div>
+        </li>
+        <li class="mandate mandate--own">
+          <span class="mandate-cat">Altius mandate &middot; Indonesia</span>
+          <p class="mandate-value">Capital Raising</p>
+          <h3 class="mandate-type">Automotive components manufacturer</h3>
+          <div class="mandate-foot"><span>Financial Adviser</span><span>2025&ndash;2026</span></div>
+        </li>
+        <li class="mandate mandate--own">
+          <span class="mandate-cat">Altius mandate &middot; Indonesia</span>
+          <p class="mandate-value">Capital Raising</p>
+          <h3 class="mandate-type">Industrial manufacturer</h3>
+          <div class="mandate-foot"><span>Financial Adviser</span><span>2025&ndash;2026</span></div>
+        </li>
+      </ul>
+
+      <h3 class="mandates-group">Team credentials <span>2004&ndash;2025</span></h3>
+      <div class="mandates-filter" role="group" aria-label="Filter mandates by type">
+        <button type="button" class="mandates-chip is-active" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="mandates-chip" data-filter="equity" aria-pressed="false">Equity</button>
+        <button type="button" class="mandates-chip" data-filter="debt" aria-pressed="false">Debt</button>
+        <button type="button" class="mandates-chip" data-filter="corporate" aria-pressed="false">Corporate action</button>
+      </div>
+
+      <ul class="mandates-grid mandates-grid--team">
+        <li class="mandate" data-pillar="equity">
+          <span class="mandate-cat">Equity &middot; Indonesia</span>
+          <p class="mandate-value">Up to 25m<small>USD</small></p>
+          <h3 class="mandate-type">Initial Public Offering</h3>
+          <p class="mandate-desc">IDX listing for an industrial company.</p>
+          <div class="mandate-foot"><span>Lead Underwriter</span><span>2021&ndash;2025</span></div>
+        </li>
+        <li class="mandate" data-pillar="debt">
+          <span class="mandate-cat">Debt &middot; Offshore</span>
+          <p class="mandate-value">25&ndash;100m<small>USD</small></p>
+          <h3 class="mandate-type">Offshore Bond</h3>
+          <p class="mandate-desc">Foreign-currency bond for an Indonesian industrial group.</p>
+          <div class="mandate-foot"><span>Lead Underwriter</span><span>2021&ndash;2025</span></div>
+        </li>
+        <li class="mandate" data-pillar="corporate">
+          <span class="mandate-cat">Corporate action &middot; Indonesia</span>
+          <p class="mandate-value">500m+<small>USD</small></p>
+          <h3 class="mandate-type">Rights Issue</h3>
+          <p class="mandate-desc">Rights issue for a listed financial institution.</p>
+          <div class="mandate-foot"><span>Arranger</span><span>2021&ndash;2025</span></div>
+        </li>
+        <li class="mandate" data-pillar="equity">
+          <span class="mandate-cat">Equity &middot; Indonesia</span>
+          <p class="mandate-value">50&ndash;100m<small>USD</small></p>
+          <h3 class="mandate-type">Initial Public Offering</h3>
+          <p class="mandate-desc">IDX listing for a consumer services company.</p>
+          <div class="mandate-foot"><span>Lead Underwriter</span><span>2021&ndash;2025</span></div>
+        </li>
+        <li class="mandate" data-pillar="debt">
+          <span class="mandate-cat">Debt &middot; International</span>
+          <p class="mandate-value">500m+<small>USD</small></p>
+          <h3 class="mandate-type">Global Bonds</h3>
+          <p class="mandate-desc">Multi-currency global bond offering for an Indonesian issuer.</p>
+          <div class="mandate-foot"><span>Bookrunner</span><span>2017&ndash;2020</span></div>
+        </li>
+        <li class="mandate" data-pillar="corporate">
+          <span class="mandate-cat">Corporate action &middot; Indonesia</span>
+          <p class="mandate-value">50&ndash;100m<small>USD</small></p>
+          <h3 class="mandate-type">Tender Offer</h3>
+          <p class="mandate-desc">Tender offer for a listed financial-services company.</p>
+          <div class="mandate-foot"><span>Arranger</span><span>2021&ndash;2025</span></div>
+        </li>
+        <li class="mandate" data-pillar="equity">
+          <span class="mandate-cat">Equity &middot; Indonesia</span>
+          <p class="mandate-value">50&ndash;100m<small>USD</small></p>
+          <h3 class="mandate-type">Initial Public Offering</h3>
+          <p class="mandate-desc">IDX listing for an infrastructure company.</p>
+          <div class="mandate-foot"><span>Lead Underwriter</span><span>2017&ndash;2020</span></div>
+        </li>
+        <li class="mandate" data-pillar="debt">
+          <span class="mandate-cat">Debt &middot; Indonesia</span>
+          <p class="mandate-value">500m+<small>USD</small></p>
+          <h3 class="mandate-type">Shelf Bonds &amp; Sukuk</h3>
+          <p class="mandate-desc">Multi-tranche bond and sukuk programme for an industrial group.</p>
+          <div class="mandate-foot"><span>Lead Underwriter</span><span>2021&ndash;2025</span></div>
+        </li>
+        <li class="mandate" data-pillar="corporate">
+          <span class="mandate-cat">Corporate action &middot; Indonesia</span>
+          <p class="mandate-value">Up to 25m<small>USD</small></p>
+          <h3 class="mandate-type">Private Placement</h3>
+          <p class="mandate-desc">Private equity placement for a healthcare manufacturer.</p>
+          <div class="mandate-foot"><span>Arranger</span><span>2021&ndash;2025</span></div>
+        </li>
+      </ul>
+
+      <p class="mandates-note">Altius mandates are engagements of Altius Wealth Partners; their terms remain confidential. Team credentials include transactions executed by members of our team in previous roles at other institutions. Ongoing mandates are not disclosed. Past transactions are not indicative of future results.</p>
+    </div>
+    <h3 class="audience-h">Why Altius</h3>
+    <ul class="audience-why">
+      <li><strong>Led by capital-markets bankers</strong><span>Former heads of investment banking at leading Indonesian securities houses.</span></li>
+      <li><strong>Connected across regions</strong><span>Offices in Jakarta, Mauritius and Dubai link you with investors beyond your home market.</span></li>
+      <li><strong>Confidential by design</strong><span>Mandates are presented on a no-name basis until you decide otherwise.</span></li>
+    </ul>
+    <div class="audience-end">
+      <a href="#cta" class="a3d-cta audience-cta"><span>Discuss a mandate</span><span class="a3d-cta-icon" aria-hidden="true">&rarr;</span></a>
+      <button type="button" class="audience-switch" data-audience-open="for-families">Planning for your family instead? <span aria-hidden="true">&rarr;</span></button>
+    </div>
+  </div>
+</section>
+
 <!--PAGE2-->
 <!-- Vision Text Reveal Section -->
 <section id="vision-reveal" class="vision-reveal-section">
@@ -317,7 +513,7 @@
 			<div class="roadmap-center">
 				<div class="process-cards-stack">
                     <!-- Pillar I -->
-                      <div class="glass-card">
+                      <div class="glass-card" id="service-wealth">
                           <span class="card-numeral">I</span>
                           <h3 class="process-card-title">Wealth Management</h3>
                           <p class="card-lead">Preserving and growing private wealth across generations and jurisdictions.</p>
@@ -331,7 +527,7 @@
                     </div>
 
                     <!-- Pillar II -->
-                      <div class="glass-card">
+                      <div class="glass-card" id="service-corporate">
                           <span class="card-numeral">II</span>
                           <h3 class="process-card-title">Corporate Action</h3>
                           <p class="card-lead">Advising owners and boards on the decisions that reshape a business.</p>
@@ -344,7 +540,7 @@
                     </div>
 
                     <!-- Pillar III -->
-                      <div class="glass-card">
+                      <div class="glass-card" id="service-capital">
                           <span class="card-numeral">III</span>
                           <h3 class="process-card-title">Capital Markets</h3>
                           <p class="card-lead">Raising the capital that funds the next stage of growth.</p>
@@ -527,6 +723,54 @@
 
 
 
+<!-- OUR TEAM — collective experience, no individual names, roles or photos (Sep 2026 company profile, pp. 5–6) -->
+<section class="leaders" id="leadership" aria-labelledby="leaders-title">
+  <div class="leaders-inner">
+    <div class="leaders-top">
+      <div>
+        <p class="leaders-eyebrow">Our Team</p>
+        <h2 class="leaders-title" id="leaders-title">Experience at the highest level</h2>
+        <p class="leaders-lede">Our senior team built their careers at leading private banks and investment houses in Switzerland, Europe and Asia &mdash; and now bring that experience to families and companies alike.</p>
+      </div>
+    </div>
+
+    <div class="leaders-grid">
+      <article class="leader">
+        <p class="leader-for">For families &amp; individuals</p>
+        <h3 class="leader-role">Private wealth</h3>
+        <ul class="leader-points">
+          <li>Swiss private banking heritage, at managing-director and executive-director level</li>
+          <li>UHNW wealth management, family-office and holding structures</li>
+          <li>Multi-jurisdictional planning across Mauritius, Hong Kong and Europe</li>
+        </ul>
+        <p class="leader-bg">Backgrounds include Julius Baer, Credit Suisse, Union Bancaire Priv&eacute;e and BNP Paribas.</p>
+      </article>
+      <article class="leader">
+        <p class="leader-for">For companies &amp; founders</p>
+        <h3 class="leader-role">Capital markets &amp; corporate action</h3>
+        <ul class="leader-points">
+          <li>Led investment banking at leading Indonesian securities houses</li>
+          <li>30+ IPOs and 90+ bond and sukuk issues in Indonesia</li>
+          <li>Rights issues, private placements, tender offers and M&amp;A</li>
+        </ul>
+        <p class="leader-bg">Backgrounds include Mirae Asset, Shinhan, Sucor, Daiwa and HSBC.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- SELECTED MANDATES — teaser; the tombstones live in the "For companies & founders" panel -->
+<section class="mandates-teaser" id="selected-mandates" aria-labelledby="mandates-teaser-title">
+  <div class="mandates-teaser-inner">
+    <div>
+      <p class="mandates-eyebrow">Selected Mandates</p>
+      <h2 class="mandates-title" id="mandates-teaser-title">Trusted with what matters most</h2>
+      <p class="mandates-lede">A selection of mandates advised by Altius and transactions executed by our team across equity, debt and corporate action &mdash; presented on a no-name basis.</p>
+    </div>
+    <a class="mandates-teaser-go" href="#for-companies" data-audience-open="for-companies" data-audience-anchor="panel-mandates">View selected mandates <span aria-hidden="true">&rarr;</span></a>
+  </div>
+</section>
+
 <section class="section stats-section" style="position: relative;">
 	<div class="container">
 		<div class="section-header">
@@ -626,10 +870,10 @@
     <script src='https://unpkg.com/gsap@3/dist/gsap.min.js' crossorigin="anonymous"></script>
     <script src='https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js' crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
-    <script src="./script.js?v=20261023e"></script>
-    <script type="module" src="./ascent3d.js?v=20261023e"></script>
-    <script type="module" src="./globe3d.js?v=20261023e"></script>
-    <script type="module" src="./sky.js?v=20261023e"></script>
+    <script src="./script.js?v=20261110f"></script>
+    <script type="module" src="./ascent3d.js?v=20261110f"></script>
+    <script type="module" src="./globe3d.js?v=20261110f"></script>
+    <script type="module" src="./sky.js?v=20261110f"></script>
 
 
   <!-- Contact Modal -->
